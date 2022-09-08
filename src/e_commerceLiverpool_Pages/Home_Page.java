@@ -69,6 +69,24 @@ public class Home_Page extends BasePage{
 	 @FindBy(css = "figure.m-figureCard__figure img")
 	 public WebElement imgTypeAhead;
 	 
+	 @FindBy(css = "div.img-wrapper-rectangle")
+	 public WebElement imgInsuranceCategory;
+	 
+	 @FindBy(css = "span.m-navDesktop__selectstore")
+	 public WebElement linkSelectStore;
+	 
+	 @FindBy(css = "input#CP")
+	 public WebElement txtCity;
+	 
+	 @FindBy(css = "div.stores-container")
+	 public WebElement storesContainer;
+	 
+	 @FindBy(css = "input[name= 'Stores-list']")
+	 public WebElement rdoStore;
+	 
+	 @FindBy(css = "span.headerMyStoredesk")
+	 public WebElement spanMyStore;
+	 
 	 public Home_Page(WebDriver driver) {
 			super(driver);
 			PageFactory.initElements(driver, this);

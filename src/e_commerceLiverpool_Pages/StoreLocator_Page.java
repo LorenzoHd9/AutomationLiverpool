@@ -19,7 +19,7 @@ public class StoreLocator_Page extends BasePage{
 	@FindBy(css = "li[class = 'list-group-item a-list-li-scrollable']")
 	public WebElement liStore;
 	
-	@FindBy(css = "input[id='mainSearchbar'] [placeholder='Buscar por nombre o estado']")
+	@FindBy(css = "div[class ='m-header__searchBar -storeLocator'] [id='mainSearchbar']")
 	public WebElement txtSearchStore;
 	
 	@FindBy(css = "div.mapBtn")

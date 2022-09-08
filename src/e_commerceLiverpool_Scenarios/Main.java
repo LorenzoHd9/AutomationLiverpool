@@ -8,7 +8,8 @@ public class Main {
 		//Browse_Scenario.browse();
 		//Search_Scenario.search();
 		//GiftRegistry_Scenario.giftRegistry();
-		RegisteredCheckout_Scenario.registeredCheckout();
+		//RegisteredCheckout_Scenario.registeredCheckout();
+		StaticPages_Scenario.statiPages();
 		System.out.println("finish");
 	}
 

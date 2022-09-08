@@ -57,6 +57,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		login.txtUserName.sendKeys("test.ccheck.app011005@gmail.com");
 		login.txtPassword.sendKeys("12345678");
 		login.btnLogIn.click();
+		//wait.until(ExpectedConditions.textToBePresentInElement(element, text));
 	}
 	
 	public void navigateUserSessionOpt() throws InterruptedException{
