@@ -13,7 +13,7 @@ public class FQA_Page extends BasePage{
 	@FindBy(xpath = "//a[contains(text(),'Crédito')]")
 	public WebElement  linkCreditoPage;
 	
-	@FindBy(css = "div[class='title ng-binding'] [ng-bind='actualCategory.titulo']")
+	@FindBy(css = "div[class='title ng-binding']")
 	public WebElement divTitleCategory;
 	
 	@FindBy(css = "img.logoAyuda")
@@ -57,6 +57,9 @@ public class FQA_Page extends BasePage{
 	
 	@FindBy(css = "div.frecuente-tag")
 	public WebElement divFAQTag;
+	
+	@FindBy(css = "ul.main-questions")
+	public WebElement mainQuestions;
 	
 	public FQA_Page(WebDriver driver) {
 		super(driver);
