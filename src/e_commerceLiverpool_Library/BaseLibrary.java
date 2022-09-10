@@ -1,8 +1,8 @@
 package e_commerceLiverpool_Library;
 
 import java.time.Duration;
+import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -54,5 +54,17 @@ public class BaseLibrary {
 		Actions action = new Actions(driver);
 		action.moveToElement(element).perform();
 		
+	}
+	
+	protected WebElement refreshedAndClickable(WebElement element) {
+		return new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.refreshed(
+						ExpectedConditions.elementToBeClickable(element)));
+	}
+	
+	protected List<WebElement> refreshedAllAndClickable(List<WebElement> element) {
+		return new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.refreshed(
+						ExpectedConditions.visibilityOfAllElements(element)));
 	}
 }

@@ -21,8 +21,12 @@ public class PLP_Page extends BasePage{
 	@FindBy(xpath = "//a[contains(text(),'Ver todo')]")
 	public WebElement linkVerTodo;
 	
-	@FindBy(css = "img.card-img-top")
+	/*@FindBy(css = "img.card-img-top")
 	public WebElement imgLinkL3;
+	*/
+	//m-figureCard__figure card  m-card
+	@FindBy(css = "figure[class ='m-figureCard__figure card  m-card']")
+	public List<WebElement> imgsLinkL3;
 	
 	@FindBy(css = "div[class='d-flex align-items-center'] [id='sortby']")
 	public WebElement cmbSortBy;
@@ -42,16 +46,20 @@ public class PLP_Page extends BasePage{
 	@FindBy(css = "div.o-listing__products")
 	public WebElement divGridView;
 	
-	@FindBy(css = "div.o-card__image__container")
+	/*@FindBy(css = "div.o-card__image__container")
 	public WebElement imgProduct_pdp;
+	*/
+	@FindBy(css = "div.o-card__image__container")
+	public List<WebElement> imgProduct_pdp;
 	
 	@FindBy(css = "div.fiterl-prices input")
 	public WebElement chbxPrice;
 	
 	@FindBy(id = "variants.prices.discountPercentage-undefined")
-	public WebElement chbxPromotion;
+	public List<WebElement> chbxPromotion;
 	
 	@FindBy(css = "div.filter-brands input")
+	//@FindBy(id = "brand-&ME")
 	public WebElement chbxBrand;
 	
 	@FindBy(css = "ul.a-plp-color a")

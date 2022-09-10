@@ -18,6 +18,9 @@ public class Home_Page extends BasePage{
 	 @FindBy(css = "img[class='a-header__logo'][title='Liverpool Logo']")
 	 public WebElement imgLogo;
 	 
+	 @FindBy(css = "img[class='header_logo liverpool']")
+	 public WebElement imgLogoBackLogin;
+	 
 	 @FindBy(xpath = "//span[contains(text(),'Categorías')]")
 	 public WebElement linkCategories;
 	 
@@ -86,6 +89,9 @@ public class Home_Page extends BasePage{
 	 
 	 @FindBy(css = "span.headerMyStoredesk")
 	 public WebElement spanMyStore;
+	 
+	 @FindBy(id = "seo-solicitar-tarjeta")
+	 public WebElement requestCard;
 	 
 	 public Home_Page(WebDriver driver) {
 			super(driver);

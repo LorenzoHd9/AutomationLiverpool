@@ -19,21 +19,21 @@ public class PDP_Page extends BasePage{
 	public WebElement modalStoresAvailability;
 	
 	@FindBy(css = "a.a-product__anchorSelectState")
-	public WebElement selectState;
+	public WebElement selectStateStock;
 	
-	@FindBy(css = "span.mdc-tab__content")
-	public WebElement tabContentAvailability;
+	@FindBy(id = "o-product__productSpecsDetails")
+	public WebElement divAvailabilityDetails;
 	
 	@FindBy(css = "button.close i")
 	public WebElement closeModal;
 	
-	@FindBy(id = "qtyDropdownDesktop")
+	@FindBy(id = "a-ProductQty__inputDesktop")
 	public WebElement txtProductQty;
 	
 	@FindBy(css = "a.dropdown-item")
 	public List<WebElement> selectQty;
 	
-	@FindBy(css = "li.a-productColor__item mr-lg-2 mr-3 mt-2")
+	@FindBy(css = "li[class='a-productColor__item mr-lg-2 mr-3 mt-2']")
 	public WebElement linkColor;
 	
 	@FindBy(css = "img[class = 'm-img-pdp added-event']")
@@ -78,6 +78,11 @@ public class PDP_Page extends BasePage{
 	@FindBy(css = "img.mainLoader")
 	public WebElement imgLoading;
 	
+	@FindBy(css = "span.GeoLinkText")
+	public WebElement linkEnterZipCode;
+	
+	@FindBy(css = "div.ChangeStoreTextLink")
+	public WebElement linkChangeZipcode;
 	
 	public PDP_Page(WebDriver driver) {
 		super(driver);

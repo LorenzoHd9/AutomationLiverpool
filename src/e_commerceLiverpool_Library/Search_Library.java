@@ -87,6 +87,6 @@ public class Search_Library extends BaseLibrary{
 		home.typeAheadResults.get(index).click();
 		wait.until(ExpectedConditions.visibilityOf(plp.divGridView));
 		//wait.until(ExpectedConditions.visibilityOf(plp.imgProduct_pdp));
-		waitForVisibilityOf(plp.imgProduct_pdp);
+		//waitForVisibilityOf(plp.imgProduct_pdp);  NECESIU CAMBIARSE POR LA LISTA
 	}
 }

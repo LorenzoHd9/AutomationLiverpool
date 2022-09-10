@@ -107,18 +107,18 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		//search with key world
 		search("iphone");
 		//click random product
-		plp.imgProduct_pdp.click();
+		plp.imgProduct_pdp.get(0).click();
 		// add to cart item 1
 		addtocart();
 		Thread.sleep(stepDelay);
 		// add to cart item 2
 		search("perfumes"); //not going to measure
-		plp.imgProduct_pdp.click();
+		plp.imgProduct_pdp.get(0).click();
 		addtocart();
 		Thread.sleep(stepDelay);
 		// add to cart item 3
 		search("sofa"); //not going to measure
-		plp.imgProduct_pdp.click();
+		plp.imgProduct_pdp.get(0).click();
 		addtocart();
 		Thread.sleep(stepDelay);
 		
@@ -303,7 +303,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys(searchTerm + Keys.ENTER);
 		waitForVisibilityOf(plp.cmbSortBy);
-		waitForVisibilityOf(plp.imgProduct_pdp);
+		///waitForVisibilityOf(plp.imgProduct_pdp); NECESITA CAMBIARSE POR LA LISTA.
 	}
 
 }
