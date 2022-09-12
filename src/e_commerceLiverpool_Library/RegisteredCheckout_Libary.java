@@ -28,6 +28,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	private MyBag_Page mybag;
 	private Checkout_Page checkout;
 	int stepDelay = 2000;
+	
 	public RegisteredCheckout_Libary(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -43,15 +44,13 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	
 	private void homePage() throws InterruptedException {
 		pageLoad();
-		//wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
-		waitForVisibilityOf(home.carouselOnesection);
+		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 	}
 	
 	public void LogIn() throws InterruptedException {
 		homePage();
 		home.linkLogIn.click();
 		pageLoad();
-		//wait.until(ExpectedConditions.visibilityOf(login.txtUserName));
 		waitForVisibilityOf(login.txtUserName);
 		waitForVisibilityOf(login.btnLogIn);
 		login.txtUserName.sendKeys("test.ccheck.app011005@gmail.com");
@@ -61,93 +60,74 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	}
 	
 	public void navigateUserSessionOpt() throws InterruptedException{
-		homePage();
-		/*Mi cuenta*/
+		pageLoad();
+		// init timer Mi cuenta
 		navigateMyAccount(0,myaccount.listAside);
 		waitForVisibilityOf(myaccount.divPersonalData);
-		/*end*/
-		home.imgLogo.click();
-		homePage();
-		Thread.sleep(stepDelay);
-		/*Mis Compras*/
+		// end
+		// init timer mis compras
 		navigateMyAccount(1,myaccount.listAside);
 		waitForVisibilityOf(myaccount.orderFilter);
-		/*end*/
-		home.imgLogo.click();
-		homePage();
-		Thread.sleep(stepDelay);
-		/*coupones*/
+		// end
+		// init timer
 		navigateMyAccount(2,myaccount.listAside);
 		waitForVisibilityOf(myaccount.myCouponsTemplate);
-		/*end*/
-		home.imgLogo.click();
-		homePage();
-		Thread.sleep(stepDelay);
-		/*Mi tiempo aire*/
+		// end
+		// init timer mi tiempo aire
 		navigateMyAccount(3,myaccount.btnAddNumber);
-		/*end*/
-		home.imgLogo.click();
-		homePage();
-		Thread.sleep(stepDelay);
-		/*Mis Tarjetas*/
-		navigateMyAccount(4,myaccount.defaultCart);
+		waitForVisibilityOf(myaccount.btnSubmitRecharge);
+		// end
+		// init mis tarjetas
+		navigateMyAccount(4,myaccount.defaultCart); // (*)
 		waitForVisibilityOf(myaccount.btnAddCard);
-		/*end*/
-		home.imgLogo.click();
-		homePage();
-		Thread.sleep(stepDelay);
-		/*Cerrar sesion*/
+		// end
+		/*cerrar sesion
 		navigateMyAccount(5,home.carouselOnesection);
-		/*end*/
-		Thread.sleep(stepDelay);
+		//end*/
 	}
 	
 	public void addItems() throws InterruptedException{
-		homePage();
 		//search with key world
-		search("iphone");
+		search("sofa");
 		//click random product
 		plp.imgProduct_pdp.get(0).click();
 		// add to cart item 1
 		addtocart();
-		Thread.sleep(stepDelay);
+		// end
+		search("laptop"); //not going to measure
+		plp.imgProduct_pdp.get(0).click();
 		// add to cart item 2
+		addtocart();
+		//end
 		search("perfumes"); //not going to measure
 		plp.imgProduct_pdp.get(0).click();
-		addtocart();
-		Thread.sleep(stepDelay);
 		// add to cart item 3
-		search("sofa"); //not going to measure
-		plp.imgProduct_pdp.get(0).click();
 		addtocart();
-		Thread.sleep(stepDelay);
 		
 	}
 	
 	public void myBag() throws InterruptedException {
-		homePage();
-		wait.until(ExpectedConditions.visibilityOf(home.linkMyBag)).click();
+		//init timer ir a bolsa
+		wait.until(ExpectedConditions.elementToBeClickable(home.linkMyBag)).click();
 		System.out.println("in my cart page");
-		waitForVisibilityOf(pdp.imgLoading);
-		wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
-		System.out.println("page loaded");
-		waitForVisibilityOf(mybag.divColumnProduct);
+		isLoadImgEnabled();
+		pageLoad();
+		//waitForVisibilityOf(mybag.divColumnProduct);
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
 		wait.until(ExpectedConditions.visibilityOfAllElements(mybag.txtProductQty));
 		System.out.println("how many input qty there are: " + mybag.txtProductQty.size());
+		// end
+		
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE);
 		mybag.txtProductQty.get(0).sendKeys("2" + Keys.TAB);
-		waitForVisibilityOf(pdp.imgLoading);
-		wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
+		isLoadImgEnabled();
 		wait.until(ExpectedConditions.visibilityOf(mybag.txtProductQty.get(1))).sendKeys(Keys.BACK_SPACE);
 		mybag.txtProductQty.get(1).sendKeys("2"+ Keys.TAB);
-		waitForVisibilityOf(pdp.imgLoading);
-		wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
+		isLoadImgEnabled();
 		System.out.println("how many save to later button appear: "+ mybag.btnSaveProduct.size());
 		waitForVisibilityOf(mybag.btnSaveProduct.get(2));
 	    mybag.btnSaveProduct.get(2).click();
-		waitForVisibilityOf(pdp.imgLoading);
-		wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
+	    isLoadImgEnabled();
 		scroll(home.txtSearchBar);
 	} 
 	
@@ -295,6 +275,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		waitForVisibilityOf(home.mySessionLinks.get(index));
 		System.out.println("click At: "+ home.mySessionLinks.get(index).getText());
 		home.mySessionLinks.get(index).click();
+		pageLoad();
 		waitForVisibilityOf(waitForElement);
 	}
 	
@@ -302,7 +283,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		wait.until(ExpectedConditions.elementToBeClickable(home.txtSearchBar)).click();
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys(searchTerm + Keys.ENTER);
-		waitForVisibilityOf(plp.cmbSortBy);
+		refreshedAllAndClickable(plp.imgProduct_pdp);
 		///waitForVisibilityOf(plp.imgProduct_pdp); NECESITA CAMBIARSE POR LA LISTA.
 	}
 

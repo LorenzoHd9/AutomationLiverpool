@@ -272,8 +272,8 @@ public class Browse_Library extends BaseLibrary{
 		home.imgLogoBackLogin.click();
 		homePage();
 		//init timer mesa de regalo
-		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTable)).click();
-		waitForVisibilityOf(gift.btnGoToGift);
+		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
+		waitForVisibilityOf(gift.btnGotoSearchGift);
 		//end 
 		//init timer 
 		home.linkMyCredit.click();

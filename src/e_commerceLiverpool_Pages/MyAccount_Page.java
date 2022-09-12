@@ -19,6 +19,9 @@ public class MyAccount_Page extends BasePage{
 	@FindBy(xpath = "//button[contains(text(),'Agregar teléfono')]")
 	public WebElement btnAddNumber;
 	
+	@FindBy(css = "button[class ='a-btn a-btn--primary a-airTime-end__recharge']")
+	public WebElement btnSubmitRecharge;
+	
 	@FindBy(id = "loggedInCC")
 	public WebElement btnAddCard;
 	

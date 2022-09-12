@@ -40,7 +40,7 @@ public class Home_Page extends BasePage{
 	 public WebElement txtSearchBar;
 	 
 	 @FindBy(linkText = "Mesa de regalos")
-	 public WebElement linkGiftTable;
+	 public WebElement linkGiftTablePage;
 	 
 	 @FindBy(linkText = "Mi crédito")
 	 public WebElement linkMyCredit;

@@ -25,34 +25,40 @@ public class GiftRegistry_Library extends BaseLibrary{
 	public void searchByName() throws InterruptedException {
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
-		// init go to gift registry
-		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTable)).click();
-		pageLoad();
-		wait.until(ExpectedConditions.visibilityOf(gift.btnGoToGift));
-		gift.btnGoToGift.click();
-		wait.until(ExpectedConditions.visibilityOf(gift.txtFirstName)).sendKeys("diana");
-		wait.until(ExpectedConditions.visibilityOf(gift.txtParentName)).sendKeys("caballero");
-		wait.until(ExpectedConditions.visibilityOf(gift.btnSearchGift));
-		gift.btnSearchGift.click();
+		//init timer go to gift Registry page
+		gotoGiftRegistrypage();
+		//end
+		// init timer search gift table by name
+		gift.btnGotoSearchGift.click();
+		waitForVisibilityOf(gift.txtFirstName);
+		gift.txtFirstName.sendKeys("Diana");
+		gift.txtParentName.sendKeys("caballero");
+		wait.until(ExpectedConditions.elementToBeClickable(gift.btnSearchGift)).click();
 		wait.until(ExpectedConditions.invisibilityOf(gift.imgLoading));
-		wait.until(ExpectedConditions.visibilityOf(gift.btnSeeList)).click();
+		wait.until(ExpectedConditions.visibilityOfAllElements(gift.btnSeeList));
+		gift.btnSeeList.get(0).click();
 		wait.until(ExpectedConditions.invisibilityOf(gift.imgLoading));
-		wait.until(ExpectedConditions.visibilityOf(gift.imgCelebrated));
+		wait.until(ExpectedConditions.visibilityOfAllElements(gift.allProductsImg));
+		//end
 	}
 	
 	public void searchByID() throws InterruptedException {
-		Thread.sleep(3000);
-		// init go to gift registry
-		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTable));
-		home.linkGiftTable.click();
-		pageLoad();
+		gotoGiftRegistrypage();
 		// Search by ID
-		wait.until(ExpectedConditions.visibilityOf(gift.btnGoToGift)).click();
-		wait.until(ExpectedConditions.visibilityOf(gift.txtEventNumber));
+		gift.btnGotoSearchGift.click();
+		waitForVisibilityOf(gift.txtFirstName);
 		scroll(gift.txtEventNumber);
 		gift.txtEventNumber.sendKeys("50841501");
-		wait.until(ExpectedConditions.visibilityOf(gift.btnSearchID)).click();
+		wait.until(ExpectedConditions.elementToBeClickable(gift.btnSearchID)).click();
 		wait.until(ExpectedConditions.invisibilityOf(gift.imgLoading));
-		wait.until(ExpectedConditions.visibilityOf(gift.imgCelebrated));
+		wait.until(ExpectedConditions.visibilityOfAllElements(gift.allProductsImg));
+		//end
 	}
+	
+	private void gotoGiftRegistrypage() throws InterruptedException {
+		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
+		pageLoad();
+		waitForVisibilityOf(gift.btnGotoSearchGift);
+	}
+	
 }

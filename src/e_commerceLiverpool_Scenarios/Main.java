@@ -6,9 +6,9 @@ public class Main {
 		// TODO Auto-generated method stub
 		System.out.println("start");
 		//Browse_Scenario.browse();
-		Search_Scenario.search();
+		//Search_Scenario.search();
 		//GiftRegistry_Scenario.giftRegistry();
-		//RegisteredCheckout_Scenario.registeredCheckout();
+		RegisteredCheckout_Scenario.registeredCheckout();
 		//StaticPages_Scenario.statiPages();
 		System.out.println("finish");
 	}
