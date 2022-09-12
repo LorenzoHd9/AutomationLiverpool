@@ -9,13 +9,13 @@ public class Browse_Scenario extends CreateDriver{
 		while(i< 8) {
 			Browse_Library browse = new Browse_Library(setUp());
 			browse.homePage();
-			//browse.carouselOneSection();
-			//browse.carouselTwoSection();
+			browse.carouselOneSection();
+			browse.carouselTwoSection();
 			browse.OnCategories();
-			//browse.navigateL3Filters();
-			//browse.navigateL3SortBy();
+			browse.navigateL3Filters();
+			browse.navigateL3SortBy();
 			browse.onCategoryL4PDP();
-			//browse.navigateHomeLinks();
+			browse.navigateHomeLinks();
 			tearDown();
 			System.out.println("iteration number: "+ i);
 		    i++;

@@ -70,7 +70,7 @@ public class Home_Page extends BasePage{
 	 public List<WebElement> typeAheadResults;
 	 
 	 @FindBy(css = "figure.m-figureCard__figure img")
-	 public WebElement imgTypeAhead;
+	 public List<WebElement> imgTypeAhead;
 	 
 	 @FindBy(css = "div.img-wrapper-rectangle")
 	 public WebElement imgInsuranceCategory;

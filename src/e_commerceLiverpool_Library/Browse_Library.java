@@ -258,8 +258,8 @@ public class Browse_Library extends BaseLibrary{
 	}
 	
 	public void navigateHomeLinks() throws InterruptedException {
-		//home.imgLogo.click();
-		//homePage();
+		home.imgLogoBackLogin.click();
+		homePage();
 		//init timer my bag
 		wait.until(ExpectedConditions.visibilityOf(home.linkMyBag)).click();
 		try {
