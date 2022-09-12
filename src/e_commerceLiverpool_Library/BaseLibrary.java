@@ -22,6 +22,14 @@ public class BaseLibrary {
 	protected static void scroll(WebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 	}
+	
+	protected void scrollDown() {
+		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,350)","");
+	}
+	
+	protected void scrollUp() {
+		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-450)","");
+	}
 	/** wait until the document has the "ready" state **/
 	protected static void pageLoad() throws InterruptedException {
     	JavascriptExecutor js = (JavascriptExecutor)driver;
@@ -66,5 +74,10 @@ public class BaseLibrary {
 		return new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.refreshed(
 						ExpectedConditions.visibilityOfAllElements(element)));
+	}
+	
+	protected void scrollToBottom() {
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+		jsExecutor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 	}
 }

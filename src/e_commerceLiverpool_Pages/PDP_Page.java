@@ -45,11 +45,14 @@ public class PDP_Page extends BasePage{
 	@FindBy(css = "div.GeoLocationCard")
 	public WebElement divGeoLocation;
 	
-	@FindBy(css = "button[class ='a-btn a-btn--actionpdp']")
+	@FindBy(css = "ul#size-list-container button")
 	public WebElement btnSize;
 	
-	@FindBy(css = "i[class= 'icon-shared a-product__iconProductShareWeb']")
+	@FindBy(css = "a.m-product__anchorShareSocial")
 	public WebElement linkShareTo;
+	
+	@FindBy(css = "div[id ='social-modal'] [class='close']")
+	public WebElement closeCompartir;
 	
 	@FindBy(xpath = "//span[contains(text(),'Facebook')]")
 	public WebElement btnFacebook;
@@ -83,6 +86,15 @@ public class PDP_Page extends BasePage{
 	
 	@FindBy(css = "div.ChangeStoreTextLink")
 	public WebElement linkChangeZipcode;
+	
+	@FindBy(id = "TTwriteReviewBtn")
+	public WebElement productSpecsDetails;
+	
+	@FindBy(css = "span.GeoStoreName")
+	public WebElement myZipCode;
+	
+	@FindBy(css = "div[class ='slick-slide slick-active slick-current']")
+	public WebElement carousel;
 	
 	public PDP_Page(WebDriver driver) {
 		super(driver);

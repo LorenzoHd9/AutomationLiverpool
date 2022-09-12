@@ -152,9 +152,9 @@ public class Browse_Library extends BaseLibrary{
 	}
 	
 	public void onCategoryL4PDP() throws InterruptedException {
-		try{
+		//try{
 			if(plp.linkL2_L4.isDisplayed() != false) {
-				System.out.println("Category L4 is found");
+				//System.out.println("Category L4 is found");
 				// init timer oncategoryL4
 				plp.linkL2_L4.click();
 				wait.until(ExpectedConditions.visibilityOf(plp.iconL2));
@@ -165,27 +165,35 @@ public class Browse_Library extends BaseLibrary{
 				plp.imgProduct_pdp.get(0).click();
 				pageLoad();
 				waitForVisibilityOf(pdp.pProductInfoCode);
-				System.out.println("PDP");
+				System.out.println("selected Product random PDP");
 				// end
+				// init timer enter zip code
+				wait.until(ExpectedConditions.visibilityOf(pdp.linkEnterZipCode)).click();
+				home.txtCity.sendKeys("64000"+ Keys.ENTER);
+				waitForVisibilityOf(pdp.linkChangeZipcode);
+				wait.until(ExpectedConditions.textToBePresentInElement(pdp.myZipCode, "C.P. 64000"));
+				System.out.println("entered my zip code");
+				//end 
 				try {
-					scroll(pdp.divGeoLocation);
-					System.out.println("scroll to btn size");
-					System.out.println("is size dis: "+pdp.btnSize.isDisplayed());
+					scrollDown();
+					Thread.sleep(500);
+					//System.out.println("is size displayed: "+pdp.btnSize.isDisplayed());
 					if(pdp.btnSize.isDisplayed() != false) {
 						// init timer elegir tamano/ talla
-						wait.until(ExpectedConditions.visibilityOf(pdp.btnSize)).click();
+						wait.until(ExpectedConditions.elementToBeClickable(pdp.btnSize)).click();
 						System.out.println("clicked at size button");
 						refreshedAndClickable(pdp.viewerImgPDP);
 						// end
 					}
-					scroll(pdp.linkColor);
+					else {System.out.println("not going to write in DB");}
 					if(pdp.linkColor.isDisplayed() != false) {
 						//init timer elegir color
-						wait.until(ExpectedConditions.visibilityOf(pdp.linkColor)).click();
+						wait.until(ExpectedConditions.elementToBeClickable(pdp.linkColor)).click();
 						System.out.println("clicked at color button");
 						refreshedAndClickable(pdp.viewerImgPDP);
 						//end
 					}
+					else {System.out.println("not goint to write in DB");}					/*
 					if(pdp.txtProductQty.isDisplayed() != false) {
 						//init timer change quantity
 						pdp.txtProductQty.sendKeys(Keys.BACK_SPACE + "2"+ Keys.TAB);
@@ -193,56 +201,60 @@ public class Browse_Library extends BaseLibrary{
 						System.out.println("change quantity");
 						//duda
 						//end
-					}
-				}
-				catch(Exception ex) {}
-				scroll(pdp.pProductInfoCode);
+					}*/
+				}catch(Exception ex) {}
 				//init timer availability on store
-				pdp.stockStore.click();
+				//scroll(home.txtSearchBar);
+				scrollUp();
+				wait.until(ExpectedConditions.elementToBeClickable(pdp.stockStore)).click();
 				System.out.println("click at stock");
 				waitForVisibilityOf(pdp.selectStateStock);
 				pdp.selectStateStock.click();
 				waitForVisibilityOf(pdp.divAvailabilityDetails);
 				pdp.closeModal.click();
-				System.out.println("disponibilidad en tienda");
+				System.out.println("clicked disponibilidad en tienda");
 				//end
-				// init timer enter zip code
-				wait.until(ExpectedConditions.visibilityOf(pdp.linkEnterZipCode)).click();
-				home.txtCity.sendKeys("64000"+ Keys.ENTER);
-				waitForVisibilityOf(pdp.linkChangeZipcode);
-				//end 
 				// init add to my bag
 				wait.until(ExpectedConditions.visibilityOf(pdp.btnAddToCart)).click();
 				scroll(home.txtSearchBar);
 				waitForVisibilityOf(pdp.alertContainer);
 				wait.until(ExpectedConditions.invisibilityOf(pdp.alertContainer));
+				System.out.println("added to my shopping cart");
 				// end
+				scroll(pdp.btnSize);
+				Thread.sleep(500);
 				// init timer shared on socila media
-				scroll(pdp.linkShareTo);
-				pdp.linkShareTo.click();
+				wait.until(ExpectedConditions.elementToBeClickable(pdp.linkShareTo)).click();
 				waitForVisibilityOf(pdp.btnFacebook);
-				pdp.closeModal.click();
+				pdp.closeCompartir.click();
+				System.out.println("click at share on social media");
 				//end
 				// init timer look for similar products
-				scroll(home.carouselOnesection);
-				wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection)).click();
+				scrollToBottom();
+				wait.until(ExpectedConditions.visibilityOf(pdp.carousel));
+				scroll(pdp.carousel);
+				wait.until(ExpectedConditions.visibilityOf(pdp.carousel)).click();
 				refreshedAndClickable(pdp.viewerImgPDP);
+				waitForVisibilityOf(pdp.pProductInfoCode);
+				System.out.println("select one similar item in the carousel");
 				// end
-				// init timer buy now
 				try {
-					if(pdp.btnSize.isDisplayed() != false) {
-						// init timer elegir tamano/ talla
-						wait.until(ExpectedConditions.visibilityOf(pdp.btnSize)).click();
-						System.out.println("clicked at size button");
-						refreshedAndClickable(pdp.viewerImgPDP);
-						// end
-					}
+					Thread.sleep(500);
+					scrollDown();
+					Thread.sleep(500);
+					wait.until(ExpectedConditions.visibilityOf(pdp.btnSize)).click();
+					System.out.println("clicked at size button");
+					refreshedAndClickable(pdp.viewerImgPDP);
+					scroll(home.txtSearchBar);
+					Thread.sleep(500);
+					// init timer buy now
+					wait.until(ExpectedConditions.elementToBeClickable(pdp.btnBuyNow)).click();
+					waitForVisibilityOf(login.txtUserName);
+					System.out.println("clicked at buy now");
+					//end
 				}catch(Exception ex) {}
-				wait.until(ExpectedConditions.visibilityOf(pdp.btnBuyNow)).click();
-				waitForVisibilityOf(login.txtUserName);
-				//end
 			}
-		} catch(Exception ex) {}
+		//} catch(Exception ex) {}
 	}
 	
 	public void navigateHomeLinks() throws InterruptedException {
