@@ -19,7 +19,7 @@ public class Checkout_Page extends BasePage{
 	@FindBy(css = "select.mdc-select__native-control")
 	public WebElement cmbState;
 	
-	@FindBy(css = "div.pc_pickup__addStore--store--container")
+	@FindBy(css = "div.pc_pickup__addStore--store--container div")
 	public WebElement containerPickUPStore;
 	
 	@FindBy(xpath = "//button[contains(text(),'Continuar')]")
@@ -36,15 +36,19 @@ public class Checkout_Page extends BasePage{
 	
 	@FindBy(css = "div[class ='a-btn a-btn--action --secondary a-checkout__btnPromotion text-promotions show  ']")
 	public WebElement btnPromotion;
-	
+	//-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open
 	@FindBy(css = "li[class = 'a-checkout_promoListElement opc_modalPromoElement']")
 	public WebElement promoOpt;
 	
-	@FindBy(css = "div[class='-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -alert mdc-snackbar--open']")
+	@FindBy(css= "div[class = '-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -alert mdc-snackbar--open'] [class='icon-close mdc-snackbar__dismiss']")
 	public WebElement snackBarError;
 	
-	@FindBy(css= "div[class='-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open']")
+	@FindBy(css= "div[class=' shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open']")
 	public WebElement alertChangeAddress;
+	
+	@FindBy(css ="div[class ='-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open']")
+				//-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open
+	public WebElement alertPayMethod;
 	
 	@FindBy(id = "loggedInCC")
 	public WebElement btnPaymentContinue;

@@ -56,7 +56,6 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		login.txtUserName.sendKeys("test.ccheck.app011005@gmail.com");
 		login.txtPassword.sendKeys("12345678");
 		login.btnLogIn.click();
-		//wait.until(ExpectedConditions.textToBePresentInElement(element, text));
 	}
 	
 	public void navigateUserSessionOpt() throws InterruptedException{
@@ -73,17 +72,14 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		navigateMyAccount(2,myaccount.listAside);
 		waitForVisibilityOf(myaccount.myCouponsTemplate);
 		// end
-		// init timer mi tiempo aire
-		navigateMyAccount(3,myaccount.btnAddNumber);
-		waitForVisibilityOf(myaccount.btnSubmitRecharge);
-		// end
 		// init mis tarjetas
 		navigateMyAccount(4,myaccount.defaultCart); // (*)
 		waitForVisibilityOf(myaccount.btnAddCard);
 		// end
-		/*cerrar sesion
-		navigateMyAccount(5,home.carouselOnesection);
-		//end*/
+		// init timer mi tiempo aire
+		navigateMyAccount(3,myaccount.btnAddNumber);
+		waitForVisibilityOf(myaccount.btnSubmitRecharge);
+		// end
 	}
 	
 	public void addItems() throws InterruptedException{
@@ -115,51 +111,60 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		//waitForVisibilityOf(mybag.divColumnProduct);
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
 		wait.until(ExpectedConditions.visibilityOfAllElements(mybag.txtProductQty));
-		System.out.println("how many input qty there are: " + mybag.txtProductQty.size());
+		//System.out.println("how many input qty there are: " + mybag.txtProductQty.size());
 		// end
-		
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE);
-		mybag.txtProductQty.get(0).sendKeys("2" + Keys.TAB);
+		mybag.txtProductQty.get(0).sendKeys("2");//+ Keys.TAB
 		isLoadImgEnabled();
+		waitForVisibilityOf(mybag.btnBuyNowProduct);
 		wait.until(ExpectedConditions.visibilityOf(mybag.txtProductQty.get(1))).sendKeys(Keys.BACK_SPACE);
-		mybag.txtProductQty.get(1).sendKeys("2"+ Keys.TAB);
+		mybag.txtProductQty.get(1).sendKeys("2"); //+ Keys.TAB
 		isLoadImgEnabled();
-		System.out.println("how many save to later button appear: "+ mybag.btnSaveProduct.size());
+		waitForVisibilityOf(mybag.btnBuyNowProduct);
+		//System.out.println("how many save to later button appear: "+ mybag.btnSaveProduct.size());
 		waitForVisibilityOf(mybag.btnSaveProduct.get(2));
 	    mybag.btnSaveProduct.get(2).click();
 	    isLoadImgEnabled();
+	    waitForVisibilityOf(mybag.btnBuyNowProduct);
 		scroll(home.txtSearchBar);
 	} 
 	
 	public void oneCheckOut() throws InterruptedException {
-		wait.until(ExpectedConditions.visibilityOf(home.linkMyBag)).click();
-		isLoadImgEnabled();
+		// init timer comprar ahora
 		wait.until(ExpectedConditions.visibilityOf(mybag.btnBuyNowProduct)).click();
-		//wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
 		isLoadImgEnabled();
+		pageLoad();
 		waitForVisibilityOf(checkout.txtchangeAddress);
+		System.out.println("click 1-----at buy now");
+		// end
 		//click collect
 		checkout.txtchangeAddress.click();
 		isLoadImgEnabled();
-		wait.until(ExpectedConditions.visibilityOf(checkout.btnclickCollect)).click();
+		waitForVisibilityOf(checkout.btnContinue);
+		checkout.btnclickCollect.click();
 		waitForVisibilityOf(checkout.cmbState);
 		Select state = new Select(checkout.cmbState);
 		checkout.cmbState.click();
 		state.selectByVisibleText("NUEVO LEÓN");
-		wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
+		isLoadImgEnabled();
 		try { waitForVisibilityOf(checkout.containerPickUPStore);
 		}catch(Exception ex) {}
 		checkout.btnContinue.click();
 		isLoadImgEnabled();
-		//end click collect
+		//wait.until(ExpectedConditions.visibilityOf(checkout.alertChangeAddress));
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertChangeAddress));
+		System.out.println("click 2----- click collect");
+		//end 
 		//forma de pago
-		wait.until(ExpectedConditions.visibilityOf(checkout.linkChangeCard)).click();
+		wait.until(ExpectedConditions.elementToBeClickable(checkout.linkChangeCard)).click();
 		isLoadImgEnabled();
-		wait.until(ExpectedConditions.visibilityOf(checkout.txtCardExpiration)).sendKeys("0924");
+		waitForVisibilityOf(checkout.btnPaymentContinue);
+		checkout.txtCardExpiration.sendKeys("0924");
 		checkout.txtCVV.sendKeys("345");
 		checkout.btnPaymentContinue.click();
 		isLoadImgEnabled();
+		wait.until(ExpectedConditions.invisibilityOf(checkout.alertPayMethod));
+		System.out.println("click 3----- forma de pago");
 		//end forma de pago
 		try {
 			scroll(checkout.btnPromotion);
@@ -171,15 +176,21 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 			if(checkout.promoOpt.isDisplayed() != false) {
 				waitForVisibilityOf(checkout.promoOpt);
 				checkout.promoOpt.click();
-				System.out.println("click at one promotion");
+				System.out.println("click 4----- promotion");
 			}
 		}catch(Exception ex) {}
 		isLoadImgEnabled();
+		/* quantity
 		scroll(mybag.txtProductQty.get(0));
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE + "1"+ Keys.TAB);
 		isLoadImgEnabled();
+		System.out.println("click 5----- quantity");
+		*/
+		scroll(mybag.txtProductQty.get(0));
+		System.out.println("aqui");
 		checkout.submitOrder.click();
-		waitForVisibilityOf(checkout.snackBarError);
+		wait.until(ExpectedConditions.visibilityOf(checkout.snackBarError)).click();
+		System.out.println("click 6----- finalize purchase");
 		//-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success -toTop
 		//-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open
 	}
@@ -189,19 +200,26 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		// entrega a tu domicilio
 		checkout.txtchangeAddress.click();
 		isLoadImgEnabled();
-		wait.until(ExpectedConditions.visibilityOf(checkout.btnHomeDelivery)).click();
+		waitForVisibilityOf(checkout.btnContinue);
+		wait.until(ExpectedConditions.elementToBeClickable(checkout.btnHomeDelivery)).click();
 		checkout.rdoMyAddress.click();
 		checkout.btnContinue.click();
 		isLoadImgEnabled();
+		//wait.until(ExpectedConditions.visibilityOf(checkout.alertChangeAddress));
+		wait.until(ExpectedConditions.invisibilityOf(checkout.alertChangeAddress));
 		// end entrega tu domicilio
+		System.out.println("click 7----- predeterminado domicilio");
 		//forma de pago
 		wait.until(ExpectedConditions.visibilityOf(checkout.linkChangeCard)).click();
 		isLoadImgEnabled();
-		wait.until(ExpectedConditions.visibilityOf(checkout.txtCardExpiration)).sendKeys("0924");
+		waitForVisibilityOf(checkout.btnPaymentContinue);
+		checkout.txtCardExpiration.sendKeys("0924");
 		checkout.txtCVV.sendKeys("345");
 		checkout.btnPaymentContinue.click();
 		isLoadImgEnabled();
+		wait.until(ExpectedConditions.invisibilityOf(checkout.alertPayMethod));
 		//end forma de pago
+		System.out.println("click 8----- forma de pago");
 		try {
 		//change prmotions dropdown
 			scroll(checkout.btnPromotion);
@@ -209,23 +227,26 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 			waitForVisibilityOf(checkout.btnPromotion);
 			checkout.btnPromotion.click();
 			System.out.println("click at promotion link");
+			isLoadImgEnabled();
 			if(checkout.promoOpt.isDisplayed() != false) {
-				wait.until(ExpectedConditions.visibilityOf(checkout.promoOpt)).click();
-				System.out.println("click at one promotion");
+				wait.until(ExpectedConditions.elementToBeClickable(checkout.promoOpt)).click();
+				System.out.println("click 9----- change promotion");
 			}
 
 		}catch(Exception ex) {}
 		isLoadImgEnabled();
 		// end change prmotions dropdown
-		//change quantity
+		/*change quantity
 		scroll(mybag.txtProductQty.get(0));
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE + "2"+ Keys.TAB);
 		isLoadImgEnabled();
-		// end change quantity
+		/*/ 
+		System.out.println("click 10-----  quantity ");
 		//finalize purchase
 		checkout.submitOrder.click();
-		waitForVisibilityOf(checkout.snackBarError);
+		wait.until(ExpectedConditions.visibilityOf(checkout.snackBarError)).click();
 		// end finalize purchase
+		System.out.println("click 11----- finalize");
 	}
 	
 	public void logOut() throws InterruptedException {
@@ -233,19 +254,17 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		checkout.imgLogoHome.click();
 		homePage();
 		// logout
-		waitForVisibilityOf(home.userNameSession);
-		hoverOn(home.userNameSession);
-		waitForVisibilityOf(myaccount.divPoUPMySession);
-		hoverOn(home.userNameSession);
-		waitForVisibilityOf(myaccount.divPoUPMySession);
-		wait.until(ExpectedConditions.visibilityOf(home.mySessionLinks.get(5))).click();
+		//cerrar sesion
+		navigateMyAccount(5,home.carouselOnesection);
+		//end
 		homePage();
 		//end logout
 	}
 	
 	private void isLoadImgEnabled() {
 		try {
-			waitForVisibilityOf(pdp.imgLoading);
+			//waitForVisibilityOf(pdp.imgLoading);
+			wait.until(ExpectedConditions.visibilityOf(pdp.imgLoading));
 			wait.until(ExpectedConditions.invisibilityOf(pdp.imgLoading));
 		}catch(Exception ex) {}
 	}
@@ -261,8 +280,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 			}
 		}
 		catch(Exception Ex) {}
-		//pdp.btnAddToCart.click();
-		wait.until(ExpectedConditions.visibilityOf(pdp.btnAddToCart)).click();
+		wait.until(ExpectedConditions.elementToBeClickable(pdp.btnAddToCart)).click();
 		scroll(home.txtSearchBar);
 		waitForVisibilityOf(pdp.alertContainer);
 		wait.until(ExpectedConditions.invisibilityOf(pdp.alertContainer));
