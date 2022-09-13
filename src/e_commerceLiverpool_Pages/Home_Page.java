@@ -33,7 +33,7 @@ public class Home_Page extends BasePage{
 	 @FindBy(css = "button.a-header__bag")
 	 public WebElement linkMyBag;
 	 
-	 @FindBy(css = "a.a-header__topLink")
+	 @FindBy(linkText = "Mis Compras")
 	 public WebElement linkMyShoppings;
 	 
 	 @FindBy(id = "mainSearchbar")

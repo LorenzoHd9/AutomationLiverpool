@@ -6,7 +6,7 @@ public class Browse_Scenario extends CreateDriver{
 
 	public static void browse() throws InterruptedException {
 		int i = 0;
-		while(i< 8) {
+		while(i< 5) {
 			Browse_Library browse = new Browse_Library(setUp());
 			browse.homePage();
 			browse.carouselOneSection();

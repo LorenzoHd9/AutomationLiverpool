@@ -45,7 +45,8 @@ public class Browse_Library extends BaseLibrary{
 	public void homePage() throws InterruptedException {
 		//init timer homePage no login
 		pageLoad();
-		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
+		waitForVisibilityOf(home.carouselOnesection);
+		//wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 		// end
 	}
 	
@@ -63,9 +64,11 @@ public class Browse_Library extends BaseLibrary{
 		navigateCarousel(home.carouselTwosection);
 		// end
 		System.out.println("carousel two");
+		home.imgLogo.click();
 	}
 
 	public void OnCategories() throws InterruptedException {
+		homePage();
 		// init timer onCategoryL1
 		hoverOn(home.linkCategories);
 		wait.until(ExpectedConditions.visibilityOf(home.categoryL1)).click();
@@ -91,13 +94,14 @@ public class Browse_Library extends BaseLibrary{
 		// init timer listingView
 		plp.iconListView.click();
 		waitForVisibilityOf(plp.divListingView);
-		//wait.until(ExpectedConditions.visibilityOf(plp.divListingView));
-		wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
+		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
+		refreshedAllAndClickable(plp.imgProduct_pdp);
 		System.out.println("listing view");
 		// end
 		plp.iconGridView.click();
 		waitForVisibilityOf(plp.divGridView);
-		wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
+		refreshedAllAndClickable(plp.imgProduct_pdp);
+		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
 		// init timer filterprice
 		selectFilter(plp.chbxPrice);
 		System.out.println("by price");
@@ -128,6 +132,7 @@ public class Browse_Library extends BaseLibrary{
 		System.out.println("sold by");
 		//end
 		cleanFilter();
+		refreshedAllAndClickable(plp.imgProduct_pdp);
 	}
 	
 	public void navigateL3SortBy() {
@@ -241,38 +246,42 @@ public class Browse_Library extends BaseLibrary{
 				try {
 					Thread.sleep(500);
 					scrollDown();
-					Thread.sleep(500);
-					wait.until(ExpectedConditions.visibilityOf(pdp.btnSize)).click();
-					System.out.println("clicked at size button");
-					refreshedAndClickable(pdp.viewerImgPDP);
+					wait.until(ExpectedConditions.visibilityOf(pdp.btnSize));
+					if(pdp.btnSize.isDisplayed() != false) {
+						pdp.btnSize.click();
+						System.out.println("clicked at size button ultimo");
+						refreshedAndClickable(pdp.viewerImgPDP);
+					}
 					scroll(home.txtSearchBar);
-					Thread.sleep(500);
 					// init timer buy now
 					wait.until(ExpectedConditions.elementToBeClickable(pdp.btnBuyNow)).click();
 					waitForVisibilityOf(login.txtUserName);
-					System.out.println("clicked at buy now");
+					System.out.println("no iniciar sesion");
 					//end
+					home.imgLogoBackLogin.click();
+					System.out.println("back");
+					home.imgLogo.click();
+					homePage();
+					System.out.println("home loaded");
 				}catch(Exception ex) {}
 			}
 		//} catch(Exception ex) {}
 	}
 	
 	public void navigateHomeLinks() throws InterruptedException {
-		home.imgLogoBackLogin.click();
-		homePage();
-		//init timer my bag
-		wait.until(ExpectedConditions.visibilityOf(home.linkMyBag)).click();
-		try {
-			waitForVisibilityOf(mybag.btnBuyNowProduct);
-		}catch(Exception ex) {}
+		System.out.println("init links home");
+		scroll(home.txtSearchBar);
+		waitForVisibilityOf(home.linkMyBag);
 		//init timer mis compras
-		home.linkMyShoppings.click();
+		wait.until(ExpectedConditions.visibilityOf(home.linkMyShoppings)).click();
+		pageLoad();
 		waitForVisibilityOf(login.txtUserName);
 		//end
 		home.imgLogoBackLogin.click();
 		homePage();
 		//init timer mesa de regalo
 		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
+		pageLoad();
 		waitForVisibilityOf(gift.btnGotoSearchGift);
 		//end 
 		//init timer 
@@ -292,24 +301,34 @@ public class Browse_Library extends BaseLibrary{
 		//end
 		home.imgLogoBackLogin.click();
 		homePage();
+		//init timer my bag
+		home.linkMyBag.click();
+		pageLoad();
+		try {
+			wait.until(ExpectedConditions.visibilityOf(mybag.btnBuyNowProduct));
+			refreshedAndClickable(mybag.btnBuyNowProduct);
+			waitForVisibilityOf(mybag.divColumnProduct);
+			System.out.println("my bag link done");
+		}catch(Exception ex) {}
+		// end
 		//init timer ayuda page
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
 		pageLoad();
 		waitForVisibilityOf(faq.linkViewAll);
-		waitForVisibilityOf(faq.mainQuestions);
+		waitForVisibilityOf(faq.linkCreditoPage);
+		//end
 	}
 	private void selectFilter(WebElement filterBy) {
 		scroll(filterBy);
 		filterBy.click();
-		waitForVisibilityOf(plp.linkCleanfilters);
-		//wait.until(ExpectedConditions.visibilityOf(plp.linkCleanfilters));
-		//refreshedAndClickable(plp.imgProduct_pdp.get(10));
+		wait.until(ExpectedConditions.visibilityOf(plp.linkCleanfilters));
 		refreshedAllAndClickable(plp.imgProduct_pdp);
 		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
 	}
 	private void cleanFilter() throws InterruptedException {
 		scroll(plp.linkCleanfilters);
-		wait.until(ExpectedConditions.elementToBeClickable(plp.linkCleanfilters)).click();
+		wait.until(ExpectedConditions.visibilityOf(plp.linkCleanfilters)).click();
+		//refreshedAllAndClickable(plp.imgProduct_pdp);
 		Thread.sleep(1500);
 	}
 	private void navigateCarousel(WebElement carouselSection) throws InterruptedException {
@@ -317,8 +336,7 @@ public class Browse_Library extends BaseLibrary{
 		carouselSection.click();
 		try {
 			pageLoad();
-			waitForVisibilityOf(pdp.pProductInfoCode);
-			//wait.until(ExpectedConditions.visibilityOf(pdp.pProductInfoCode));
+			refreshedAndClickable(pdp.pProductInfoCode);
 			
 		}catch(Exception e){}
 	}
