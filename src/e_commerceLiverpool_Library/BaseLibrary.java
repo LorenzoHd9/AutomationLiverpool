@@ -1,6 +1,10 @@
 package e_commerceLiverpool_Library;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,12 +18,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseLibrary {
 
-	private static WebDriver driver;
+	private WebDriver driver;
+	String stepName = "";
+	String scenarioName = "";
+	Date start;
 	public BaseLibrary(WebDriver driver) {
 		this.driver = driver;
 	}
 	/**  Scroll until the given element **/
-	protected static void scroll(WebElement element) {
+	protected void scroll(WebElement element) {
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
 	}
 	
@@ -31,7 +38,7 @@ public class BaseLibrary {
 		((JavascriptExecutor) driver).executeScript("window.scrollBy(0,-450)","");
 	}
 	/** wait until the document has the "ready" state **/
-	protected static void pageLoad() throws InterruptedException {
+	protected void pageLoad() throws InterruptedException {
     	JavascriptExecutor js = (JavascriptExecutor)driver;
     	boolean state=false;
     	while (state != true){
@@ -79,5 +86,30 @@ public class BaseLibrary {
 	protected void scrollToBottom() {
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
 		jsExecutor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+	
+	protected void startTimer(String stepname) {
+		start = new Date();
+		stepName = stepname;
+	}
+	//ConnectDB.setScenarioTime("Browse","Web","Navigate carousel","2022-9-14 01:17:23","2022-9-14 01:17:36",10 );
+	
+	protected void stopTimer(String scenario) {
+		Date end = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		long diff = start.getTime() - end.getTime();
+		int durationOfSeconds = (int)((diff / 1000)% 60);
+		String key = "";
+		int minute = end.getMinutes();
+		if(minute <= 10) {
+			key = "01";
+		}
+		else if(minute >= 11 && minute <= 20) {
+			key = "02";
+		}
+		else if (minute >=21 && minute <=30) {
+			key = "03";
+		}
+		ConnectDB.setScenarioTime(scenario,"Web",stepName,sdf.format(start), sdf.format(end), durationOfSeconds, key);
 	}
 }

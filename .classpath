@@ -89,5 +89,6 @@
 	<classpathentry kind="lib" path="C:/Users/Lorenzo/Desktop/selenium-java-4.1.2/lib/opentelemetry-semconv-1.10.1-alpha.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Lorenzo/Desktop/selenium-java-4.1.2/lib/reactive-streams-1.0.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Lorenzo/Desktop/selenium-java-4.1.2/lib/slf4j-api-1.7.35.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lorenzo/eclipse-workspace/MonitoreoLiverpool/mysql-connector-java-8.0.26.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

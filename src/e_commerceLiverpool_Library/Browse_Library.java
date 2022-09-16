@@ -28,7 +28,7 @@ public class Browse_Library extends BaseLibrary{
 	private GiftRegistry_Page gift;
 	private StoreLocator_Page stores;
 	private FQA_Page faq;
-	int stepdelay = 0;
+	private String scenario = "Browse";
 	public Browse_Library(WebDriver driver){
 		super(driver);
 		home = new Home_Page(driver);
@@ -43,17 +43,20 @@ public class Browse_Library extends BaseLibrary{
 	}
 	
 	public void homePage() throws InterruptedException {
-		//init timer homePage no login
+		startTimer("homepage");
 		pageLoad();
 		waitForVisibilityOf(home.carouselOnesection);
+		stopTimer(scenario);
 		//wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 		// end
 	}
 	
 	public void carouselOneSection() throws InterruptedException {
 		//init timer carousel one section
+		startTimer("Carousel one section");
 		navigateCarousel(home.carouselOnesection);
-		System.out.println("carousel one");
+		//System.out.println("carousel one");
+		stopTimer(scenario);
 		// end
 		home.imgLogo.click();
 	}
@@ -61,75 +64,97 @@ public class Browse_Library extends BaseLibrary{
 	public void carouselTwoSection() throws InterruptedException {
 		homePage();
 		//init timer carousel two section
+		startTimer("Carousel one section");
 		navigateCarousel(home.carouselTwosection);
+		stopTimer(scenario);
 		// end
-		System.out.println("carousel two");
+		//System.out.println("carousel two");
 		home.imgLogo.click();
 	}
 
 	public void OnCategories() throws InterruptedException {
 		homePage();
 		// init timer onCategoryL1
+		startTimer("Category L1");
 		hoverOn(home.linkCategories);
 		wait.until(ExpectedConditions.visibilityOf(home.categoryL1)).click();
 		pageLoad();
 		waitForVisibilityOf(plp.imgL2);
-		System.out.println("category L1");
+		stopTimer(scenario);
+		//System.out.println("category L1");
 		// end L1
 		//init timer onCategoryL2
+		startTimer("Category L2");
 		wait.until(ExpectedConditions.visibilityOf(plp.linkL2_L4)).click();
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgsLinkL3));
 		System.out.println("category L2");
+		stopTimer(scenario);
 		//end L2
 		//init timer onCategoryL3
+		startTimer("Category L3");
 		plp.linkVerTodo.click();
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
-		System.out.println("category L3");
+		//System.out.println("category L3");
+		stopTimer(scenario);
 		// end
 	}
 
 	public void navigateL3Filters() throws InterruptedException {
 		// init timer listingView
+		startTimer("Listing View");
 		plp.iconListView.click();
 		waitForVisibilityOf(plp.divListingView);
 		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
 		refreshedAllAndClickable(plp.imgProduct_pdp);
-		System.out.println("listing view");
+		//System.out.println("listing view");
+		stopTimer(scenario);
 		// end
 		plp.iconGridView.click();
 		waitForVisibilityOf(plp.divGridView);
 		refreshedAllAndClickable(plp.imgProduct_pdp);
 		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
 		// init timer filterprice
+		startTimer("Filter by Price");
 		selectFilter(plp.chbxPrice);
-		System.out.println("by price");
+		//System.out.println("by price");
+		stopTimer(scenario);
 		//end
 		cleanFilter();
 		// init timer filterpromotions
+		startTimer("Filter by Discount");
 		selectFilter(plp.chbxPromotion.get(4));
-		System.out.println("by discount");
+		//System.out.println("by discount");
+		stopTimer(scenario);
 		//end
 		cleanFilter();
 		//init timer filterbrand
+		startTimer("Filter by Brand");
 		selectFilter(plp.chbxBrand);
-		System.out.println("by brand");
+		//System.out.println("by brand");
+		stopTimer(scenario);
 		// end
 		cleanFilter();
 		// init timer filtercolor
+		startTimer("Filter by Color");
 		selectFilter(plp.chbxColor);
-		System.out.println("by color");
+		//System.out.println("by color");
+		stopTimer(scenario);
 		// end
 		cleanFilter();
 		// init timer filterRating
+		startTimer("Filter by Rating");
 		selectFilter(plp.chbxRating);
-		System.out.println("by rating");
+		//System.out.println("by rating");
+		stopTimer(scenario);
 		// end
 		cleanFilter();
 		// init timer filtersoldBy
+		startTimer("Filter by Sold By");
 		selectFilter(plp.chbxSoldBy);
-		System.out.println("sold by");
+		//System.out.println("sold by");
+		stopTimer(scenario);
 		//end
 		cleanFilter();
 		refreshedAllAndClickable(plp.imgProduct_pdp);
@@ -137,22 +162,34 @@ public class Browse_Library extends BaseLibrary{
 	
 	public void navigateL3SortBy() {
 		// init timer sortByRelevancia
+		startTimer("Sort by relevancia");
 		sortBy(0, "Relevancia");
+		stopTimer(scenario);
 		// end
 		// init timer sortByMenorprecio
+		startTimer("Sort by Menor precio");
 		sortBy(2, "Menor precio");
+		stopTimer(scenario);
 		// end
 		// init timer soldByMayorprecio
+		startTimer("Sort by Mayor precio");
 		sortBy(3, "Mayor precio");
+		stopTimer(scenario);
 		// end
 		// init timer sortByCalificaciones
+		startTimer("Sort by Calificaciones");
 		sortBy(4, "Calificaciones");
+		stopTimer(scenario);
 		// end
 		// init timer sortByMasVisto
+		startTimer("Sort by Mas visto");
 		sortBy(5, "Más visto");
+		stopTimer(scenario);
 		// end
 		// init timer sortByMasVendido
+		startTimer("Sort by Mas vendido");
 		sortBy(6, "Más vendido");
+		stopTimer(scenario);
 		// end
 	}
 	
@@ -347,4 +384,5 @@ public class Browse_Library extends BaseLibrary{
 		System.out.println("combo: "+plp.cmbSortBy.getText());
 		refreshedAllAndClickable(plp.imgProduct_pdp);
 	}
+	
 }
