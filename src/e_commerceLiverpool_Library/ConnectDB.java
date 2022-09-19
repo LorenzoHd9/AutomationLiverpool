@@ -25,13 +25,13 @@ public class ConnectDB {
 		return con;
 	}
 	
-	public static void setScenarioTime(String scriptName, String platform, String step, String startDate , String endDate, int durationOf, String key) {
+	public static void setScenarioTime(String scriptName, String platform, String step, String startDate , String endDate, double durationOf, String key) {
 		Connection conn = null;
 		PreparedStatement statement = null;
 		try {
 			conn = connect();
 			//String query = "INSERT INTO liverpool (script_name,platform,step,start_date,end_date,duration_seconds) VALUES ("+"'"+scriptName+"'"+","+"'"+platform+"'"+","+"'"+step+"'"+","+"'"+startDate+"'"+","+"'"+endDate+"'"+","+"'"+durationOf+"'"+")";
-			String query2= "INSERT INTO step_time (script_name,platform,step,start_date,end_date,duration_seconds) VALUES ("+"'"+scriptName+"'"+","+"'"+platform+"'"+","+"'"+step+"'"+","+"'"+startDate+"'"+","+"'"+endDate+"'"+","+"'"+durationOf+"'"+","+"'"+key+"'"+")";
+			String query2= "INSERT INTO step_time (script_name,platform,step,start_date,end_date,duration_seconds,key_row) VALUES ("+"'"+scriptName+"'"+","+"'"+platform+"'"+","+"'"+step+"'"+","+"'"+startDate+"'"+","+"'"+endDate+"'"+","+""+durationOf+""+","+"'"+key+"'"+")";
 			//statement = (PreparedStatement) conn.prepareStatement(query2);
 			statement = (PreparedStatement) conn.prepareStatement(query2);
 	        int n = statement.executeUpdate();

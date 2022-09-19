@@ -39,200 +39,178 @@ public class Browse_Library extends BaseLibrary{
 		gift = new GiftRegistry_Page(driver);
 		stores = new StoreLocator_Page(driver);
 		faq = new FQA_Page(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(40));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 	}
 	
 	public void homePage() throws InterruptedException {
-		startTimer("homepage");
+		startTimer(scenario,"homepage");
 		pageLoad();
 		waitForVisibilityOf(home.carouselOnesection);
-		stopTimer(scenario);
+		stopTimer();
 		//wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 		// end
 	}
 	
 	public void carouselOneSection() throws InterruptedException {
-		//init timer carousel one section
-		startTimer("Carousel one section");
+		startTimer(scenario,"Carousel_one_section");
 		navigateCarousel(home.carouselOnesection);
-		//System.out.println("carousel one");
-		stopTimer(scenario);
-		// end
+		stopTimer();
 		home.imgLogo.click();
+		homePage();
 	}
 	
 	public void carouselTwoSection() throws InterruptedException {
-		homePage();
-		//init timer carousel two section
-		startTimer("Carousel one section");
+		startTimer(scenario,"carousel_two_section");
 		navigateCarousel(home.carouselTwosection);
-		stopTimer(scenario);
-		// end
-		//System.out.println("carousel two");
-		home.imgLogo.click();
+		stopTimer();
 	}
 
 	public void OnCategories() throws InterruptedException {
-		homePage();
-		// init timer onCategoryL1
-		startTimer("Category L1");
+		startTimer(scenario,"category_l1");
+		hoverOn(home.linkCategories);
+		Thread.sleep(500);
 		hoverOn(home.linkCategories);
 		wait.until(ExpectedConditions.visibilityOf(home.categoryL1)).click();
 		pageLoad();
 		waitForVisibilityOf(plp.imgL2);
-		stopTimer(scenario);
-		//System.out.println("category L1");
+		stopTimer();
 		// end L1
-		//init timer onCategoryL2
-		startTimer("Category L2");
+		startTimer(scenario,"category_l2");
 		wait.until(ExpectedConditions.visibilityOf(plp.linkL2_L4)).click();
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgsLinkL3));
-		System.out.println("category L2");
-		stopTimer(scenario);
+		stopTimer();
 		//end L2
-		//init timer onCategoryL3
-		startTimer("Category L3");
+		startTimer(scenario,"category_l3");
 		plp.linkVerTodo.click();
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
-		//System.out.println("category L3");
-		stopTimer(scenario);
-		// end
+		stopTimer();
+		// end l3
 	}
 
 	public void navigateL3Filters() throws InterruptedException {
-		// init timer listingView
-		startTimer("Listing View");
+		startTimer(scenario,"listing_view");
 		plp.iconListView.click();
 		waitForVisibilityOf(plp.divListingView);
-		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
 		refreshedAllAndClickable(plp.imgProduct_pdp);
-		//System.out.println("listing view");
-		stopTimer(scenario);
+		stopTimer();
 		// end
 		plp.iconGridView.click();
 		waitForVisibilityOf(plp.divGridView);
 		refreshedAllAndClickable(plp.imgProduct_pdp);
-		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
-		// init timer filterprice
-		startTimer("Filter by Price");
+		startTimer(scenario,"filter_price");
 		selectFilter(plp.chbxPrice);
-		//System.out.println("by price");
-		stopTimer(scenario);
+		stopTimer();
 		//end
+		startTimer(scenario,"remove_filter");
 		cleanFilter();
-		// init timer filterpromotions
-		startTimer("Filter by Discount");
+		stopTimer();
+		startTimer(scenario,"filter_discount");
 		selectFilter(plp.chbxPromotion.get(4));
-		//System.out.println("by discount");
-		stopTimer(scenario);
+		stopTimer();
 		//end
+		startTimer(scenario,"remove_filter");
 		cleanFilter();
-		//init timer filterbrand
-		startTimer("Filter by Brand");
+		stopTimer();
+		startTimer(scenario,"filter_brand");
 		selectFilter(plp.chbxBrand);
-		//System.out.println("by brand");
-		stopTimer(scenario);
+		stopTimer();
 		// end
+		startTimer(scenario,"remove_filter");
 		cleanFilter();
-		// init timer filtercolor
-		startTimer("Filter by Color");
+		stopTimer();
+		startTimer(scenario,"filter_color");
 		selectFilter(plp.chbxColor);
-		//System.out.println("by color");
-		stopTimer(scenario);
+		stopTimer();
 		// end
+		startTimer(scenario,"remove_filter");
 		cleanFilter();
-		// init timer filterRating
-		startTimer("Filter by Rating");
+		stopTimer();
+		startTimer(scenario,"filter_rating");
 		selectFilter(plp.chbxRating);
-		//System.out.println("by rating");
-		stopTimer(scenario);
+		stopTimer();
 		// end
+		startTimer(scenario,"remove_filter");
 		cleanFilter();
-		// init timer filtersoldBy
-		startTimer("Filter by Sold By");
+		stopTimer();
+		startTimer(scenario,"filter_sold_by");
 		selectFilter(plp.chbxSoldBy);
-		//System.out.println("sold by");
-		stopTimer(scenario);
+		stopTimer();
 		//end
+		startTimer(scenario,"remove_filter");
 		cleanFilter();
 		refreshedAllAndClickable(plp.imgProduct_pdp);
+		stopTimer();
 	}
 	
 	public void navigateL3SortBy() {
-		// init timer sortByRelevancia
-		startTimer("Sort by relevancia");
+		startTimer(scenario,"sort_relevance");
 		sortBy(0, "Relevancia");
-		stopTimer(scenario);
+		stopTimer();
 		// end
-		// init timer sortByMenorprecio
-		startTimer("Sort by Menor precio");
+		startTimer(scenario,"sort_lowest_price");
 		sortBy(2, "Menor precio");
-		stopTimer(scenario);
+		stopTimer();
 		// end
-		// init timer soldByMayorprecio
-		startTimer("Sort by Mayor precio");
+		startTimer(scenario,"sort_highest_price");
 		sortBy(3, "Mayor precio");
-		stopTimer(scenario);
+		stopTimer();
 		// end
-		// init timer sortByCalificaciones
-		startTimer("Sort by Calificaciones");
+		startTimer(scenario,"sort_rating");
 		sortBy(4, "Calificaciones");
-		stopTimer(scenario);
+		stopTimer();
 		// end
-		// init timer sortByMasVisto
-		startTimer("Sort by Mas visto");
+		startTimer(scenario,"sort_most_viewed");
 		sortBy(5, "Más visto");
-		stopTimer(scenario);
+		stopTimer();
 		// end
-		// init timer sortByMasVendido
-		startTimer("Sort by Mas vendido");
+		startTimer(scenario,"sort_most_selled");
 		sortBy(6, "Más vendido");
-		stopTimer(scenario);
+		stopTimer();
 		// end
 	}
 	
 	public void onCategoryL4PDP() throws InterruptedException {
 		//try{
+		startTimer(scenario,"category_l4");
 			if(plp.linkL2_L4.isDisplayed() != false) {
-				//System.out.println("Category L4 is found");
-				// init timer oncategoryL4
 				plp.linkL2_L4.click();
 				wait.until(ExpectedConditions.visibilityOf(plp.iconL2));
 				refreshedAllAndClickable(plp.imgProduct_pdp);
-				System.out.println("Category L4");
+				stopTimer();
 				//end
-				// init timer clickRandomProduct PDP
+				startTimer(scenario,"click_random_product");
 				plp.imgProduct_pdp.get(0).click();
 				pageLoad();
 				waitForVisibilityOf(pdp.pProductInfoCode);
-				System.out.println("selected Product random PDP");
+				stopTimer();
 				// end
-				// init timer enter zip code
+				startTimer(scenario,"change_zip_code");
 				wait.until(ExpectedConditions.visibilityOf(pdp.linkEnterZipCode)).click();
 				home.txtCity.sendKeys("64000"+ Keys.ENTER);
 				waitForVisibilityOf(pdp.linkChangeZipcode);
 				wait.until(ExpectedConditions.textToBePresentInElement(pdp.myZipCode, "C.P. 64000"));
-				System.out.println("entered my zip code");
+				stopTimer();
 				//end 
 				try {
+					startTimer(scenario,"select_size");
 					scrollDown();
 					Thread.sleep(500);
-					//System.out.println("is size displayed: "+pdp.btnSize.isDisplayed());
 					if(pdp.btnSize.isDisplayed() != false) {
-						// init timer elegir tamano/ talla
 						wait.until(ExpectedConditions.elementToBeClickable(pdp.btnSize)).click();
 						System.out.println("clicked at size button");
 						refreshedAndClickable(pdp.viewerImgPDP);
+						stopTimer();
 						// end
 					}
 					else {System.out.println("not going to write in DB");}
 					if(pdp.linkColor.isDisplayed() != false) {
-						//init timer elegir color
+						startTimer(scenario,"select_color");
 						wait.until(ExpectedConditions.elementToBeClickable(pdp.linkColor)).click();
 						System.out.println("clicked at color button");
 						refreshedAndClickable(pdp.viewerImgPDP);
+						stopTimer();
 						//end
 					}
 					else {System.out.println("not goint to write in DB");}					/*
@@ -248,37 +226,37 @@ public class Browse_Library extends BaseLibrary{
 				//init timer availability on store
 				//scroll(home.txtSearchBar);
 				scrollUp();
+				startTimer(scenario,"check_availability");
 				wait.until(ExpectedConditions.elementToBeClickable(pdp.stockStore)).click();
-				System.out.println("click at stock");
 				waitForVisibilityOf(pdp.selectStateStock);
 				pdp.selectStateStock.click();
 				waitForVisibilityOf(pdp.divAvailabilityDetails);
 				pdp.closeModal.click();
-				System.out.println("clicked disponibilidad en tienda");
-				//end
-				// init add to my bag
+				stopTimer();
+				// end
+				startTimer(scenario,"add_to_cart");
 				wait.until(ExpectedConditions.visibilityOf(pdp.btnAddToCart)).click();
 				scroll(home.txtSearchBar);
 				waitForVisibilityOf(pdp.alertContainer);
 				wait.until(ExpectedConditions.invisibilityOf(pdp.alertContainer));
-				System.out.println("added to my shopping cart");
+				stopTimer();
 				// end
+				startTimer(scenario,"share_social_media");
 				scroll(pdp.btnSize);
 				Thread.sleep(500);
-				// init timer shared on socila media
 				wait.until(ExpectedConditions.elementToBeClickable(pdp.linkShareTo)).click();
 				waitForVisibilityOf(pdp.btnFacebook);
 				pdp.closeCompartir.click();
-				System.out.println("click at share on social media");
+				stopTimer();
 				//end
-				// init timer look for similar products
+				startTimer(scenario,"carousel_related_products");
 				scrollToBottom();
 				wait.until(ExpectedConditions.visibilityOf(pdp.carousel));
 				scroll(pdp.carousel);
 				wait.until(ExpectedConditions.visibilityOf(pdp.carousel)).click();
 				refreshedAndClickable(pdp.viewerImgPDP);
 				waitForVisibilityOf(pdp.pProductInfoCode);
-				System.out.println("select one similar item in the carousel");
+				stopTimer();
 				// end
 				try {
 					Thread.sleep(500);
@@ -286,88 +264,91 @@ public class Browse_Library extends BaseLibrary{
 					wait.until(ExpectedConditions.visibilityOf(pdp.btnSize));
 					if(pdp.btnSize.isDisplayed() != false) {
 						pdp.btnSize.click();
-						System.out.println("clicked at size button ultimo");
 						refreshedAndClickable(pdp.viewerImgPDP);
 					}
+					startTimer(scenario,"buy_now");
 					scroll(home.txtSearchBar);
-					// init timer buy now
 					wait.until(ExpectedConditions.elementToBeClickable(pdp.btnBuyNow)).click();
 					waitForVisibilityOf(login.txtUserName);
-					System.out.println("no iniciar sesion");
-					//end
+					stopTimer();
+					// end
 					home.imgLogoBackLogin.click();
-					System.out.println("back");
 					home.imgLogo.click();
 					homePage();
-					System.out.println("home loaded");
 				}catch(Exception ex) {}
 			}
 		//} catch(Exception ex) {}
 	}
 	
 	public void navigateHomeLinks() throws InterruptedException {
-		System.out.println("init links home");
-		scroll(home.txtSearchBar);
+		startTimer(scenario,"navigate_my_orders");
+		//scroll(home.txtSearchBar);
+		scrollUp();
 		waitForVisibilityOf(home.linkMyBag);
-		//init timer mis compras
 		wait.until(ExpectedConditions.visibilityOf(home.linkMyShoppings)).click();
 		pageLoad();
 		waitForVisibilityOf(login.txtUserName);
-		//end
+		stopTimer();
+		// end
 		home.imgLogoBackLogin.click();
 		homePage();
-		//init timer mesa de regalo
+		startTimer(scenario,"navigate_gift_table");
 		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
 		pageLoad();
 		waitForVisibilityOf(gift.btnGotoSearchGift);
-		//end 
-		//init timer 
+		stopTimer();
+		// end
+		startTimer(scenario,"navigate_my_credit");
 		home.linkMyCredit.click();
 		pageLoad();
 		waitForVisibilityOf(home.requestCard);
+		stopTimer();
 		// end
-		// init timer tiendas
+		startTimer(scenario,"navigate_my_stores");
 		home.linkStores.click();
 		pageLoad();
 		waitForVisibilityOf(stores.btnMapOpt);
-		//end
-		//init timer citas en tiendas
+		stopTimer();
+		// end
+		startTimer(scenario,"navigate_store_appointments");
 		home.inStoreAppointments.click();
 		pageLoad();
 		waitForVisibilityOf(login.txtUserName);
-		//end
+		stopTimer();
+		// end
 		home.imgLogoBackLogin.click();
 		homePage();
-		//init timer my bag
+		startTimer(scenario,"navigate_my_bag");
 		home.linkMyBag.click();
 		pageLoad();
 		try {
 			wait.until(ExpectedConditions.visibilityOf(mybag.btnBuyNowProduct));
 			refreshedAndClickable(mybag.btnBuyNowProduct);
 			waitForVisibilityOf(mybag.divColumnProduct);
-			System.out.println("my bag link done");
 		}catch(Exception ex) {}
+		stopTimer();
 		// end
-		//init timer ayuda page
+		startTimer(scenario,"navigate_help");
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
 		pageLoad();
 		waitForVisibilityOf(faq.linkViewAll);
 		waitForVisibilityOf(faq.linkCreditoPage);
-		//end
+		stopTimer();
 	}
+	
 	private void selectFilter(WebElement filterBy) {
 		scroll(filterBy);
 		filterBy.click();
 		wait.until(ExpectedConditions.visibilityOf(plp.linkCleanfilters));
 		refreshedAllAndClickable(plp.imgProduct_pdp);
-		//wait.until(ExpectedConditions.visibilityOfAllElements(plp.imgProduct_pdp));
 	}
+	
 	private void cleanFilter() throws InterruptedException {
 		scroll(plp.linkCleanfilters);
 		wait.until(ExpectedConditions.visibilityOf(plp.linkCleanfilters)).click();
-		//refreshedAllAndClickable(plp.imgProduct_pdp);
 		Thread.sleep(1500);
 	}
+	
 	private void navigateCarousel(WebElement carouselSection) throws InterruptedException {
 		scroll(carouselSection);
 		carouselSection.click();
@@ -377,6 +358,7 @@ public class Browse_Library extends BaseLibrary{
 			
 		}catch(Exception e){}
 	}
+	
 	private void sortBy(int index, String sortBy) {
 		plp.cmbSortBy.click();
 		plp.dropDownItems.get(index).click();

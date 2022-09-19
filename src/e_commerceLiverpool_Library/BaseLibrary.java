@@ -88,28 +88,29 @@ public class BaseLibrary {
 		jsExecutor.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 	}
 	
-	protected void startTimer(String stepname) {
+	protected void startTimer(String scenario, String stepname) {
 		start = new Date();
+		scenarioName = scenario;
 		stepName = stepname;
 	}
 	//ConnectDB.setScenarioTime("Browse","Web","Navigate carousel","2022-9-14 01:17:23","2022-9-14 01:17:36",10 );
 	
-	protected void stopTimer(String scenario) {
+	protected void stopTimer() {
 		Date end = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-		long diff = start.getTime() - end.getTime();
-		int durationOfSeconds = (int)((diff / 1000)% 60);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		SimpleDateFormat keyformat = new SimpleDateFormat("yyyyMMddHH");
+		String initime = sdf.format(start);
+		String endtime = sdf.format(end);
+		double diff = end.getTime() - start.getTime();
+		double durationOfSeconds =diff / 1000.00;
 		String key = "";
-		int minute = end.getMinutes();
-		if(minute <= 10) {
-			key = "01";
+		int minute = (end.getMinutes()/5)+1;
+		if(minute< 10) {
+			key = keyformat.format(end)+"0"+minute;
 		}
-		else if(minute >= 11 && minute <= 20) {
-			key = "02";
+		else {
+			key = keyformat.format(end)+""+minute;
 		}
-		else if (minute >=21 && minute <=30) {
-			key = "03";
-		}
-		ConnectDB.setScenarioTime(scenario,"Web",stepName,sdf.format(start), sdf.format(end), durationOfSeconds, key);
+		ConnectDB.setScenarioTime(scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
 	}
 }
