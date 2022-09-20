@@ -93,7 +93,6 @@ public class BaseLibrary {
 		scenarioName = scenario;
 		stepName = stepname;
 	}
-	//ConnectDB.setScenarioTime("Browse","Web","Navigate carousel","2022-9-14 01:17:23","2022-9-14 01:17:36",10 );
 	
 	protected void stopTimer() {
 		Date end = new Date();

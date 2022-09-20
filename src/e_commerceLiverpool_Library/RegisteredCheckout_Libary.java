@@ -27,8 +27,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	private PDP_Page pdp;
 	private MyBag_Page mybag;
 	private Checkout_Page checkout;
-	int stepDelay = 2000;
-	
+	String scenario = "Registered_User_Checkout";
 	public RegisteredCheckout_Libary(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -49,95 +48,130 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	
 	public void LogIn() throws InterruptedException {
 		homePage();
+		startTimer(scenario,"navigate_login_Page");
 		home.linkLogIn.click();
 		pageLoad();
 		waitForVisibilityOf(login.txtUserName);
 		waitForVisibilityOf(login.btnLogIn);
+		stopTimer();
+		startTimer(scenario,"fill_form_&_login");
 		login.txtUserName.sendKeys("test.ccheck.app011005@gmail.com");
 		login.txtPassword.sendKeys("12345678");
 		login.btnLogIn.click();
+		pageLoad();
+		stopTimer();
 	}
 	
 	public void navigateUserSessionOpt() throws InterruptedException{
-		pageLoad();
-		// init timer Mi cuenta
+		startTimer(scenario,"naviagte_my_account");
 		navigateMyAccount(0,myaccount.listAside);
 		waitForVisibilityOf(myaccount.divPersonalData);
+		stopTimer();
 		// end
-		// init timer mis compras
+		startTimer(scenario,"naviagte_my_shoppings");
 		navigateMyAccount(1,myaccount.listAside);
 		waitForVisibilityOf(myaccount.orderFilter);
+		stopTimer();
 		// end
-		// init timer
+		startTimer(scenario,"naviagte_my_coupons");
 		navigateMyAccount(2,myaccount.listAside);
 		waitForVisibilityOf(myaccount.myCouponsTemplate);
+		stopTimer();
 		// end
-		// init mis tarjetas
+		startTimer(scenario,"naviagte_my_cards");
 		navigateMyAccount(4,myaccount.defaultCart); // (*)
 		waitForVisibilityOf(myaccount.btnAddCard);
+		stopTimer();
 		// end
-		// init timer mi tiempo aire
+		startTimer(scenario,"naviagte_airtime_recharge");
 		navigateMyAccount(3,myaccount.btnAddNumber);
 		waitForVisibilityOf(myaccount.btnSubmitRecharge);
+		stopTimer();
 		// end
 	}
 	
 	public void addItems() throws InterruptedException{
-		//search with key world
+		startTimer(scenario,"search_item1");
 		search("sofa");
-		//click random product
-		plp.imgProduct_pdp.get(0).click();
-		// add to cart item 1
-		addtocart();
+		stopTimer();
 		// end
-		search("laptop"); //not going to measure
+		startTimer(scenario,"click_random_product1");
 		plp.imgProduct_pdp.get(0).click();
-		// add to cart item 2
+		waitForVisibilityOf(pdp.pProductInfoCode);
+		waitForVisibilityOf(pdp.btnAddToCart);
+		stopTimer();
+		// end
+		startTimer(scenario,"add_to_cart_item1");
 		addtocart();
+		stopTimer();
+		// end
+		startTimer(scenario,"search_item2");
+		search("laptop");
+		stopTimer();
+		startTimer(scenario,"click_random_product2");
+		plp.imgProduct_pdp.get(0).click();
+		waitForVisibilityOf(pdp.pProductInfoCode);
+		waitForVisibilityOf(pdp.btnAddToCart);
+		stopTimer();
+		startTimer(scenario,"add_to_cart_item2");
+		addtocart();
+		stopTimer();
 		//end
+		startTimer(scenario,"search_item3");
 		search("perfumes"); //not going to measure
+		stopTimer();
+		startTimer(scenario,"click_random_product3");
 		plp.imgProduct_pdp.get(0).click();
-		// add to cart item 3
+		waitForVisibilityOf(pdp.pProductInfoCode);
+		waitForVisibilityOf(pdp.btnAddToCart);
+		stopTimer();
+		startTimer(scenario,"add_to_cart_item3");
 		addtocart();
-		
+		stopTimer();
 	}
 	
 	public void myBag() throws InterruptedException {
-		//init timer ir a bolsa
 		wait.until(ExpectedConditions.elementToBeClickable(home.linkMyBag)).click();
-		System.out.println("in my cart page");
+		startTimer(scenario,"navigate_to_my_Bag");
 		isLoadImgEnabled();
 		pageLoad();
-		//waitForVisibilityOf(mybag.divColumnProduct);
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
 		wait.until(ExpectedConditions.visibilityOfAllElements(mybag.txtProductQty));
-		//System.out.println("how many input qty there are: " + mybag.txtProductQty.size());
+		stopTimer();
 		// end
+		startTimer(scenario,"change_quantity_item1");
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE);
-		mybag.txtProductQty.get(0).sendKeys("2");//+ Keys.TAB
+		mybag.txtProductQty.get(0).sendKeys("2"+ Keys.TAB);//+ Keys.TAB
 		isLoadImgEnabled();
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
+		stopTimer();
+		// end
+		startTimer(scenario,"change_quantity_item2");
 		wait.until(ExpectedConditions.visibilityOf(mybag.txtProductQty.get(1))).sendKeys(Keys.BACK_SPACE);
-		mybag.txtProductQty.get(1).sendKeys("2"); //+ Keys.TAB
+		mybag.txtProductQty.get(1).sendKeys("2"+ Keys.TAB); //+ Keys.TAB
 		isLoadImgEnabled();
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
-		//System.out.println("how many save to later button appear: "+ mybag.btnSaveProduct.size());
+		stopTimer();
+		// end
+		startTimer(scenario,"save_to_buy_later");
 		waitForVisibilityOf(mybag.btnSaveProduct.get(2));
+		scroll(mybag.btnSaveProduct.get(2));
 	    mybag.btnSaveProduct.get(2).click();
 	    isLoadImgEnabled();
 	    waitForVisibilityOf(mybag.btnBuyNowProduct);
 		scroll(home.txtSearchBar);
+		stopTimer();
 	} 
 	
 	public void oneCheckOut() throws InterruptedException {
-		// init timer comprar ahora
+		startTimer(scenario,"buy_now_item1");
 		wait.until(ExpectedConditions.visibilityOf(mybag.btnBuyNowProduct)).click();
 		isLoadImgEnabled();
 		pageLoad();
 		waitForVisibilityOf(checkout.txtchangeAddress);
-		System.out.println("click 1-----at buy now");
+		stopTimer();
 		// end
-		//click collect
+		startTimer(scenario,"click_collect");
 		checkout.txtchangeAddress.click();
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnContinue);
@@ -151,11 +185,10 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		}catch(Exception ex) {}
 		checkout.btnContinue.click();
 		isLoadImgEnabled();
-		//wait.until(ExpectedConditions.visibilityOf(checkout.alertChangeAddress));
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertChangeAddress));
-		System.out.println("click 2----- click collect");
-		//end 
-		//forma de pago
+		stopTimer();
+		//end
+		startTimer(scenario,"pay_form");
 		wait.until(ExpectedConditions.elementToBeClickable(checkout.linkChangeCard)).click();
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnPaymentContinue);
@@ -164,40 +197,37 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		checkout.btnPaymentContinue.click();
 		isLoadImgEnabled();
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertPayMethod));
-		System.out.println("click 3----- forma de pago");
-		//end forma de pago
+		stopTimer();
+		//end
 		try {
+			startTimer(scenario,"change_promotion");
 			scroll(checkout.btnPromotion);
-			System.out.println("scroll to promotion");
 			waitForVisibilityOf(checkout.btnPromotion);
 			checkout.btnPromotion.click();
-			System.out.println("click at promotion link");
 			isLoadImgEnabled();
 			if(checkout.promoOpt.isDisplayed() != false) {
 				waitForVisibilityOf(checkout.promoOpt);
 				checkout.promoOpt.click();
-				System.out.println("click 4----- promotion");
+				isLoadImgEnabled();
+				stopTimer();
 			}
 		}catch(Exception ex) {}
-		isLoadImgEnabled();
 		/* quantity
 		scroll(mybag.txtProductQty.get(0));
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE + "1"+ Keys.TAB);
 		isLoadImgEnabled();
 		System.out.println("click 5----- quantity");
 		*/
+		startTimer(scenario,"finalize_purchase");
 		scroll(mybag.txtProductQty.get(0));
-		System.out.println("aqui");
 		checkout.submitOrder.click();
 		wait.until(ExpectedConditions.visibilityOf(checkout.snackBarError)).click();
-		System.out.println("click 6----- finalize purchase");
-		//-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success -toTop
-		//-toTop shipping-alert m-alert__container mdc-snackbar -alertCheckout -step1 -success mdc-snackbar--open
+		stopTimer();
 	}
 	
 	public void oneCheckoutTwo() {
+		startTimer(scenario,"home_delivery");
 		waitForVisibilityOf(checkout.txtchangeAddress);
-		// entrega a tu domicilio
 		checkout.txtchangeAddress.click();
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnContinue);
@@ -205,11 +235,10 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		checkout.rdoMyAddress.click();
 		checkout.btnContinue.click();
 		isLoadImgEnabled();
-		//wait.until(ExpectedConditions.visibilityOf(checkout.alertChangeAddress));
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertChangeAddress));
-		// end entrega tu domicilio
-		System.out.println("click 7----- predeterminado domicilio");
-		//forma de pago
+		stopTimer();
+		// end
+		startTimer(scenario,"pay_form");
 		wait.until(ExpectedConditions.visibilityOf(checkout.linkChangeCard)).click();
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnPaymentContinue);
@@ -218,47 +247,43 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		checkout.btnPaymentContinue.click();
 		isLoadImgEnabled();
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertPayMethod));
-		//end forma de pago
-		System.out.println("click 8----- forma de pago");
+		stopTimer();
+		//end
 		try {
-		//change prmotions dropdown
+			startTimer(scenario,"change_promotion_checkout2");
 			scroll(checkout.btnPromotion);
-			System.out.println("scroll to promotion");
 			waitForVisibilityOf(checkout.btnPromotion);
 			checkout.btnPromotion.click();
-			System.out.println("click at promotion link");
 			isLoadImgEnabled();
 			if(checkout.promoOpt.isDisplayed() != false) {
 				wait.until(ExpectedConditions.elementToBeClickable(checkout.promoOpt)).click();
-				System.out.println("click 9----- change promotion");
+				isLoadImgEnabled();
+				stopTimer();
 			}
 
 		}catch(Exception ex) {}
-		isLoadImgEnabled();
 		// end change prmotions dropdown
 		/*change quantity
 		scroll(mybag.txtProductQty.get(0));
 		mybag.txtProductQty.get(0).sendKeys(Keys.BACK_SPACE + "2"+ Keys.TAB);
 		isLoadImgEnabled();
 		/*/ 
-		System.out.println("click 10-----  quantity ");
-		//finalize purchase
+		startTimer(scenario,"finalize_purchase_checkout2");
 		checkout.submitOrder.click();
 		wait.until(ExpectedConditions.visibilityOf(checkout.snackBarError)).click();
-		// end finalize purchase
-		System.out.println("click 11----- finalize");
+		stopTimer();
 	}
 	
 	public void logOut() throws InterruptedException {
+		startTimer(scenario,"back_to_homepage");
 		scroll(checkout.imgLogoHome);
 		checkout.imgLogoHome.click();
 		homePage();
-		// logout
-		//cerrar sesion
+		stopTimer();
+		startTimer(scenario,"logout");
 		navigateMyAccount(5,home.carouselOnesection);
-		//end
 		homePage();
-		//end logout
+		stopTimer();
 	}
 	
 	private void isLoadImgEnabled() {
@@ -270,13 +295,10 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	}
 	
 	private void addtocart() {
-		waitForVisibilityOf(pdp.pProductInfoCode);
-		waitForVisibilityOf(pdp.btnAddToCart);
 		try{
 			scroll(pdp.divGeoLocation);
 			if(pdp.btnSize.isDisplayed() != false) {
 				wait.until(ExpectedConditions.visibilityOf(pdp.btnSize)).click();
-				System.out.println("clicked at btn size");
 			}
 		}
 		catch(Exception Ex) {}

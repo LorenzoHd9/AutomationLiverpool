@@ -17,6 +17,7 @@ public class Search_Library extends BaseLibrary{
 	private Home_Page home;
 	private PLP_Page plp;
 	private PDP_Page pdp;
+	String scenario = "Search";
 	public Search_Library(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -27,54 +28,63 @@ public class Search_Library extends BaseLibrary{
 	}
 
 	public void homePage() throws InterruptedException {
+		startTimer(scenario, "homepage");
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
-		System.out.println("home page loaded");
+		stopTimer();
 	}
 	
 	public void searchKeyword() throws InterruptedException {
-		/*choose first one*/
+		startTimer(scenario,"search_choose_firstOne");
 		search("vinos", 0);
-		System.out.println("choose first one");
-		/*choose second one*/
+		stopTimer();
+		// end
+		startTimer(scenario,"search_choose_secondOne");
 		search("iphone", 1);
-		System.out.println("choose second one");
-		/*choose third one*/
+		stopTimer();
+		// end
+		startTimer(scenario,"search_choose_thirdOne");
 		search("ojos", 2);
-		System.out.println("choose third one");
-		/* choose random prodcut*/
+		stopTimer();
+		// end
+		startTimer(scenario,"search_choose_randomProduct");
 		wait.until(ExpectedConditions.visibilityOf(home.txtSearchBar)).click();
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys("mochilas");
 		refreshedAllAndClickable(home.imgTypeAhead);
-		//wait.until(ExpectedConditions.visibilityOfAllElements(home.imgTypeAhead));
 		home.imgTypeAhead.get(0).click();
 		waitForVisibilityOf(pdp.pProductInfoCode);
-		System.out.println("choose random product");
-		/* buscar en marcas */
+		stopTimer();
+		// end
+		startTimer(scenario,"search_on_brand");
 		search("ps4",5);
-		System.out.println("buscar en marcas");
-		/*buscar en categorias*/
+		stopTimer();
+		// end
+		startTimer(scenario,"search_on_category");
 		search("ojos",6);
-		System.out.println("buscar en categorias");
+		stopTimer();
 		
 	}
 	
 	public void searchID() throws InterruptedException {
+		startTimer(scenario,"search_productID");
 		search("1092197938", 00);
-		System.out.println("By ID ----------------");
-		//1092197938
+		stopTimer();
 	}
 	
-	public void searchTreeCharacters() throws InterruptedException {
+	public void searchThreeCharacters() throws InterruptedException {
 		home.imgLogo.click();
 		homePage();
+		startTimer(scenario,"three_characters_firstOne");
 		search("ojo",0);
-		System.out.println("Three characters one");
+		stopTimer();
+		startTimer(scenario,"three_characters_searchOne");
 		search("sal",1);
-		System.out.println("Three characters second one");
+		stopTimer();
+		startTimer(scenario,"three_characters_thirdOne");
 		search("vin",2);
-		System.out.println("Three characters third one");
+		stopTimer();
+		startTimer(scenario,"three_characters_randomProdcut");
 		wait.until(ExpectedConditions.visibilityOf(home.txtSearchBar)).click();
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys("sal");
@@ -82,13 +92,13 @@ public class Search_Library extends BaseLibrary{
 		home.imgTypeAhead.get(0).click();
 		pageLoad();
 		waitForVisibilityOf(pdp.pProductInfoCode);
-		System.out.println("Three characters choose random product");
-		/* buscar en marcas */
+		stopTimer();
+		startTimer(scenario,"three_characters_on_brand");
 		search("vin",5);
-		System.out.println("Three characters buscar en marcas");
-		/*buscar en categorias*/
+		stopTimer();
+		startTimer(scenario,"three_characters_on_category");
 		search("sal",6);
-		System.out.println("Three characters buscar en categorias");
+		stopTimer();
 	}
 	
 	private void search(String keyword, int index) throws InterruptedException {
@@ -97,9 +107,8 @@ public class Search_Library extends BaseLibrary{
 		home.txtSearchBar.sendKeys(keyword);
 		if(index != 00) {
 			refreshedAllAndClickable(home.typeAheadResults);
-			System.out.println(home.typeAheadResults.size());
 			home.typeAheadResults.get(index).click();
-			pageLoad();
+			//pageLoad();
 			refreshedAllAndClickable(plp.imgProduct_pdp);
 		}
 		else {

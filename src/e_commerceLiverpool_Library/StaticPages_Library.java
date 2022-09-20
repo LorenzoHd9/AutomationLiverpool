@@ -19,6 +19,7 @@ public class StaticPages_Library extends BaseLibrary{
 	private FQA_Page faq;
 	private StoreLocator_Page stores;
 	private WebDriverWait wait;
+	String scenario = "Static_Pages";
 	public StaticPages_Library(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -31,101 +32,112 @@ public class StaticPages_Library extends BaseLibrary{
 	public void goToHelpPage() throws InterruptedException {
 		homePage();
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
-		//waitForVisibilityOf(faq.txtSearchFQA);
+		startTimer(scenario,"navigate_to_help_page");
 		pageLoad();
 		waitForVisibilityOf(faq.linkViewAll);
 		waitForVisibilityOf(faq.mainQuestions);
+		stopTimer();
 	}
 	
 	public void goToStoreLocatorPage() throws InterruptedException {
+		startTimer(scenario,"back_to_homepage");
 		wait.until(ExpectedConditions.visibilityOf(faq.imgBackHome)).click();
 		homePage();
-		//init timer
+		stopTimer();
+		startTimer(scenario,"navigate_to_stores_page");
 		wait.until(ExpectedConditions.visibilityOf(home.linkStores)).click();
 		pageLoad();
 		waitForVisibilityOf(stores.btnMapOpt);
+		stopTimer();
+		startTimer(scenario,"find_store_by_name");
 		stores.txtSearchStore.sendKeys("Santa fe"+ Keys.ENTER);
 		wait.until(ExpectedConditions.textToBePresentInElement(stores.liStore, "Liverpool Santa Fe"));
 		stores.liStore.click();
-		//end timer
-		//init timer
+		stopTimer();
+		//end
+		startTimer(scenario,"find_store_by_state");
 		stores.txtSearchStore.click();
 		stores.txtSearchStore.clear();
 		Select state = new Select(stores.cmbSelectState);
-		//stores.cmbSelectState.click();
 		state.selectByVisibleText("NUEVO LEÓN");
-		System.out.println("por tienda: " + stores.liStore.getText());
 		wait.until(ExpectedConditions.textToBePresentInElement(stores.liStore, "Liverpool Galerías Monterrey"));
-		System.out.println("por estado: " + stores.liStore.getText());
 		stores.liStore.click();
+		stopTimer();
 		//end
+		startTimer(scenario,"back_to_homepage");
 		home.imgLogo.click();
+		homePage();
+		stopTimer();
 	}
 	
 	public void selectMyStore() {
-		//init timer
+		startTimer(scenario,"store_locator_select_mystore");
 		wait.until(ExpectedConditions.visibilityOf(home.linkSelectStore)).click();
 		waitForVisibilityOf(home.txtCity);
 		home.txtCity.sendKeys("Monterrey"+ Keys.ENTER);
 		waitForVisibilityOf(home.storesContainer);
 		home.rdoStore.click();
 		wait.until(ExpectedConditions.visibilityOf(home.spanMyStore));
-		System.out.println("estoy en 2: " +home.spanMyStore.getText());
+		stopTimer();
 		//end
 	}
 	
 	public void navigateFAQ() throws InterruptedException {
+		startTimer(scenario,"navigate_to_FAQ");
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
 		//waitForVisibilityOf(faq.txtSearchFQA);
 		waitForVisibilityOf(faq.linkViewAll);
-		//init Timer credito page
+		stopTimer();
+		// end
+		startTimer(scenario,"navigate_to_credito_page");
 		navigate(faq.linkCreditoPage,"Crédito");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
+		startTimer(scenario,"navigate_to_giftTable_page");
 		backToFAQ();
-		//init timer mesa de regalos
 		navigate(faq.linkMesaRegalosPage,"Mesa de regalos");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
+		startTimer(scenario,"navigate_to_aboutUs_page");
 		backToFAQ();
-		//init timer acerca de nosotros;
 		navigate(faq.linkAboutUsPage," Preguntas Frecuentes");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
+		startTimer(scenario,"navigate_to_terms&conditions_page");
 		backToFAQ();
-		//init timer proteccion datos personales
 		goTo(faq.linkProtectiondata,"Aviso de Privacidad Integral Clientes");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
-		backToFAQ();
-		
 	}
 	
 	public void navigateCredito() throws InterruptedException {
-		//init timer guia de consulta de credito
+		startTimer(scenario,"navigate_to_credit&guide_page");
+		backToFAQ();
 		goTo(faq.linkGuiaCredito," Introducción Guía de consulta de Crédito Liverpool en Internet");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
+		startTimer(scenario,"navigate_to_mycards_page");
 		backToFAQ();
-		//init timer mis tarjetas liverpool
 		goTo(faq.linkGuiaCredito,"Mis tarjetas Liverpool");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
+		startTimer(scenario,"navigate_to_creditcharge_page");
 		backToFAQ();
-		//init timer cobranza
 		goTo(faq.linkGuiaCredito," Cobranza");
+		stopTimer();
 		//end
-		//Thread.sleep(2500);
 	}
 	
 	public void navigateInsuranceCenter() throws InterruptedException {
+		startTimer(scenario,"back_to_homepage");
 		faq.imgBackHome.click();
 		homePage();
-		//init timer cobranza
+		stopTimer();
+		startTimer(scenario,"navigate_to_insurance_center_page");
 		wait.until(ExpectedConditions.visibilityOf(home.insuranceCenter)).click();
 		pageLoad();
 		waitForVisibilityOf(home.imgInsuranceCategory);
-		//init timer cobranza
+		stopTimer();
 	}
 	
 	private void goTo(WebElement linkTo, String pageTitle) {
@@ -141,14 +153,11 @@ public class StaticPages_Library extends BaseLibrary{
 		gotoLink.click();
 		waitForVisibilityOf(faq.divMenuLeft);
 		if(pageTitle == " Preguntas Frecuentes") {
-			System.out.println("true condition");
 			//wait.until(ExpectedConditions.textToBePresentInElement(faq.divFAQTag, pageTitle));
 			waitForVisibilityOf(faq.divFAQTag);
-			System.out.println("Page: "+ faq.divFAQTag.getText());
 		}
 		else {
 			wait.until(ExpectedConditions.textToBePresentInElement(faq.divTitleCategory, pageTitle));
-			System.out.println("Page: "+ faq.divTitleCategory.getText());
 		}
 		//System.out.println("Page form syst: "+ pageTitle);
 	}

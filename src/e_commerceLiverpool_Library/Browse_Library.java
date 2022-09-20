@@ -47,7 +47,6 @@ public class Browse_Library extends BaseLibrary{
 		pageLoad();
 		waitForVisibilityOf(home.carouselOnesection);
 		stopTimer();
-		//wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 		// end
 	}
 	
@@ -223,7 +222,6 @@ public class Browse_Library extends BaseLibrary{
 						//end
 					}*/
 				}catch(Exception ex) {}
-				//init timer availability on store
 				//scroll(home.txtSearchBar);
 				scrollUp();
 				startTimer(scenario,"check_availability");

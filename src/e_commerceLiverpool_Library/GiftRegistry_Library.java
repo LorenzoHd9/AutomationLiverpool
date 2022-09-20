@@ -14,6 +14,7 @@ public class GiftRegistry_Library extends BaseLibrary{
 	private WebDriverWait wait;
 	private Home_Page home;
 	private GiftRegistry_Page gift;
+	String scenario = "Gift_Registry";
 	public GiftRegistry_Library(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -23,12 +24,13 @@ public class GiftRegistry_Library extends BaseLibrary{
 	}
 
 	public void searchByName() throws InterruptedException {
+		startTimer(scenario,"homepage");
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
-		//init timer go to gift Registry page
+		stopTimer();
 		gotoGiftRegistrypage();
 		//end
-		// init timer search gift table by name
+		startTimer(scenario,"search_gift_table_byName");
 		gift.btnGotoSearchGift.click();
 		waitForVisibilityOf(gift.txtFirstName);
 		gift.txtFirstName.sendKeys("Diana");
@@ -36,29 +38,36 @@ public class GiftRegistry_Library extends BaseLibrary{
 		wait.until(ExpectedConditions.elementToBeClickable(gift.btnSearchGift)).click();
 		wait.until(ExpectedConditions.invisibilityOf(gift.imgLoading));
 		wait.until(ExpectedConditions.visibilityOfAllElements(gift.btnSeeList));
+		stopTimer();
+		startTimer(scenario,"see_list_event");
 		gift.btnSeeList.get(0).click();
 		wait.until(ExpectedConditions.invisibilityOf(gift.imgLoading));
 		wait.until(ExpectedConditions.visibilityOfAllElements(gift.allProductsImg));
+		stopTimer();
 		//end
 	}
 	
 	public void searchByID() throws InterruptedException {
 		gotoGiftRegistrypage();
-		// Search by ID
+		// end
+		startTimer(scenario,"search_gift_table_byID_event");
 		gift.btnGotoSearchGift.click();
 		waitForVisibilityOf(gift.txtFirstName);
 		scroll(gift.txtEventNumber);
-		gift.txtEventNumber.sendKeys("50841501");
+		gift.txtEventNumber.sendKeys("50186810");
 		wait.until(ExpectedConditions.elementToBeClickable(gift.btnSearchID)).click();
 		wait.until(ExpectedConditions.invisibilityOf(gift.imgLoading));
 		wait.until(ExpectedConditions.visibilityOfAllElements(gift.allProductsImg));
+		stopTimer();
 		//end
 	}
 	
 	private void gotoGiftRegistrypage() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
+		startTimer(scenario,"navigate_gift_table_page");
 		pageLoad();
 		waitForVisibilityOf(gift.btnGotoSearchGift);
+		stopTimer();
 	}
 	
 }
