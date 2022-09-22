@@ -13,12 +13,12 @@ public class ConnectDB {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://gs-mysql-production-do-user-2410679-0.b.db.ondigitalocean.com:25060/liverpool","liverpool","dgXncfR$7!eg%ZjA");												//
+			con = DriverManager.getConnection("jdbc:mysql://"+BaseLibrary.configProperties("dbHost_dbName"),BaseLibrary.configProperties("dbUser"),BaseLibrary.configProperties("dbPassword"));												//
 		}
 		catch(Exception e) {
 			System.out.println("cannot connect: "+e);
 		}
-		//if(con != null) {System.out.println("Connect Successfully");}
+		if(con != null) {System.out.println("Connect Successfully");}
 		return con;
 	}
 	
