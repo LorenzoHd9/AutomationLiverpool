@@ -18,11 +18,20 @@ public class MyBag_Page extends BasePage{
 	@FindBy(xpath = "//button[contains(text(),'Comprar ahora')]")
 	public WebElement btnBuyNowProduct;
 	
+	@FindBy(xpath = "//button[contains(text(),'Eliminar')]")
+	public WebElement btnDelete;
+	
 	@FindBy(css = "input.a-ProductQty__input")
 	public List<WebElement> txtProductQty;
 	
 	@FindBy(css = "button[class='a-btn a-btn--primary a-product__buttonBuy']")
 	public WebElement btnBuy;
+	
+	@FindBy(id ="mdc-tab-1")
+	public WebElement tabMyBag;
+	
+	@FindBy(id = "mdc-tab-2")
+	public WebElement tabItemSaved;
 	
 	@FindBy(css = "div[name='columnProduct']")
 	public WebElement divColumnProduct;

@@ -7,7 +7,10 @@ public class CreateDriver {
 	
 	private static WebDriver driver = null;
 	protected static WebDriver setUp() {
-		System.setProperty("webDriver.chrome.driver","\\chromedriver.exe");
+		try {
+			System.setProperty("webDriver.chrome.driver","chromedriver.exe");
+		}
+		catch(Exception ex) {System.out.println("cannot find chromedriver");}
 		//src/main/resources/driver/chromedriver2.exe
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();

@@ -2,8 +2,6 @@ package e_commerceLiverpool_Library;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class BaseLibrary {
 		stepName = stepname;
 	}
 	
-	protected void stopTimer() {
+	protected void stopTimer() throws InterruptedException {
 		Date end = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		SimpleDateFormat keyformat = new SimpleDateFormat("yyyyMMddHH");
@@ -111,5 +109,6 @@ public class BaseLibrary {
 			key = keyformat.format(end)+""+minute;
 		}
 		ConnectDB.setScenarioTime(scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
+		try{Thread.sleep(3000);}catch(Exception ex) {}
 	}
 }

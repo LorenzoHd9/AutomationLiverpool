@@ -28,7 +28,7 @@ public class Browse_Library extends BaseLibrary{
 	private GiftRegistry_Page gift;
 	private StoreLocator_Page stores;
 	private FQA_Page faq;
-	private String scenario = "Browse";
+	private String scenario = "browse";
 	public Browse_Library(WebDriver driver){
 		super(driver);
 		home = new Home_Page(driver);
@@ -43,19 +43,22 @@ public class Browse_Library extends BaseLibrary{
 	}
 	
 	public void homePage() throws InterruptedException {
-		startTimer(scenario,"homepage");
 		pageLoad();
 		waitForVisibilityOf(home.carouselOnesection);
-		stopTimer();
 		// end
 	}
 	
 	public void carouselOneSection() throws InterruptedException {
-		startTimer(scenario,"Carousel_one_section");
+		startTimer(scenario,"homepage1");
+		homePage();
+		stopTimer();
+		startTimer(scenario,"carousel_one_section");
 		navigateCarousel(home.carouselOnesection);
 		stopTimer();
 		home.imgLogo.click();
+		startTimer(scenario,"homepage2");
 		homePage();
+		stopTimer();
 	}
 	
 	public void carouselTwoSection() throws InterruptedException {
@@ -102,48 +105,48 @@ public class Browse_Library extends BaseLibrary{
 		selectFilter(plp.chbxPrice);
 		stopTimer();
 		//end
-		startTimer(scenario,"remove_filter");
+		startTimer(scenario,"remove_filter1");
 		cleanFilter();
 		stopTimer();
 		startTimer(scenario,"filter_discount");
 		selectFilter(plp.chbxPromotion.get(4));
 		stopTimer();
 		//end
-		startTimer(scenario,"remove_filter");
+		startTimer(scenario,"remove_filter2");
 		cleanFilter();
 		stopTimer();
 		startTimer(scenario,"filter_brand");
 		selectFilter(plp.chbxBrand);
 		stopTimer();
 		// end
-		startTimer(scenario,"remove_filter");
+		startTimer(scenario,"remove_filter3");
 		cleanFilter();
 		stopTimer();
 		startTimer(scenario,"filter_color");
 		selectFilter(plp.chbxColor);
 		stopTimer();
 		// end
-		startTimer(scenario,"remove_filter");
+		startTimer(scenario,"remove_filter4");
 		cleanFilter();
 		stopTimer();
 		startTimer(scenario,"filter_rating");
 		selectFilter(plp.chbxRating);
 		stopTimer();
 		// end
-		startTimer(scenario,"remove_filter");
+		startTimer(scenario,"remove_filter5");
 		cleanFilter();
 		stopTimer();
 		startTimer(scenario,"filter_sold_by");
 		selectFilter(plp.chbxSoldBy);
 		stopTimer();
 		//end
-		startTimer(scenario,"remove_filter");
+		startTimer(scenario,"remove_filter6");
 		cleanFilter();
 		refreshedAllAndClickable(plp.imgProduct_pdp);
 		stopTimer();
 	}
 	
-	public void navigateL3SortBy() {
+	public void navigateL3SortBy() throws InterruptedException {
 		startTimer(scenario,"sort_relevance");
 		sortBy(0, "Relevancia");
 		stopTimer();
@@ -272,7 +275,9 @@ public class Browse_Library extends BaseLibrary{
 					// end
 					home.imgLogoBackLogin.click();
 					home.imgLogo.click();
+					startTimer(scenario,"homepage3");
 					homePage();
+					stopTimer();
 				}catch(Exception ex) {}
 			}
 		//} catch(Exception ex) {}
@@ -289,7 +294,9 @@ public class Browse_Library extends BaseLibrary{
 		stopTimer();
 		// end
 		home.imgLogoBackLogin.click();
+		startTimer(scenario,"homepage4");
 		homePage();
+		stopTimer();
 		startTimer(scenario,"navigate_gift_table");
 		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
 		pageLoad();
@@ -315,7 +322,9 @@ public class Browse_Library extends BaseLibrary{
 		stopTimer();
 		// end
 		home.imgLogoBackLogin.click();
+		startTimer(scenario,"homepage5");
 		homePage();
+		stopTimer();
 		startTimer(scenario,"navigate_my_bag");
 		home.linkMyBag.click();
 		pageLoad();
@@ -361,7 +370,7 @@ public class Browse_Library extends BaseLibrary{
 		plp.cmbSortBy.click();
 		plp.dropDownItems.get(index).click();
 		wait.until(ExpectedConditions.textToBePresentInElement(plp.cmbSortBy, sortBy));
-		System.out.println("combo: "+plp.cmbSortBy.getText());
+		//System.out.println("combo: "+plp.cmbSortBy.getText());
 		refreshedAllAndClickable(plp.imgProduct_pdp);
 	}
 	

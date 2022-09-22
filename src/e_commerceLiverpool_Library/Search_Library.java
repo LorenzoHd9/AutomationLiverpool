@@ -17,7 +17,7 @@ public class Search_Library extends BaseLibrary{
 	private Home_Page home;
 	private PLP_Page plp;
 	private PDP_Page pdp;
-	String scenario = "Search";
+	String scenario = "search";
 	public Search_Library(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -28,26 +28,27 @@ public class Search_Library extends BaseLibrary{
 	}
 
 	public void homePage() throws InterruptedException {
-		startTimer(scenario, "homepage");
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
-		stopTimer();
 	}
 	
 	public void searchKeyword() throws InterruptedException {
-		startTimer(scenario,"search_choose_firstOne");
+		startTimer(scenario, "homepage1");
+		homePage();
+		stopTimer();
+		startTimer(scenario,"search_choose_first");
 		search("vinos", 0);
 		stopTimer();
 		// end
-		startTimer(scenario,"search_choose_secondOne");
+		startTimer(scenario,"search_choose_second");
 		search("iphone", 1);
 		stopTimer();
 		// end
-		startTimer(scenario,"search_choose_thirdOne");
+		startTimer(scenario,"search_choose_third");
 		search("ojos", 2);
 		stopTimer();
 		// end
-		startTimer(scenario,"search_choose_randomProduct");
+		startTimer(scenario,"search_choose_random");
 		wait.until(ExpectedConditions.visibilityOf(home.txtSearchBar)).click();
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys("mochilas");
@@ -67,24 +68,26 @@ public class Search_Library extends BaseLibrary{
 	}
 	
 	public void searchID() throws InterruptedException {
-		startTimer(scenario,"search_productID");
+		startTimer(scenario,"search_product_id");
 		search("1092197938", 00);
 		stopTimer();
 	}
 	
 	public void searchThreeCharacters() throws InterruptedException {
+		startTimer(scenario, "homepage2");
 		home.imgLogo.click();
 		homePage();
-		startTimer(scenario,"three_characters_firstOne");
+		stopTimer();
+		startTimer(scenario,"three_characters_first");
 		search("ojo",0);
 		stopTimer();
-		startTimer(scenario,"three_characters_searchOne");
+		startTimer(scenario,"three_characters_search");
 		search("sal",1);
 		stopTimer();
-		startTimer(scenario,"three_characters_thirdOne");
+		startTimer(scenario,"three_characters_third");
 		search("vin",2);
 		stopTimer();
-		startTimer(scenario,"three_characters_randomProdcut");
+		startTimer(scenario,"three_characters_random");
 		wait.until(ExpectedConditions.visibilityOf(home.txtSearchBar)).click();
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys("sal");

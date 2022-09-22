@@ -19,7 +19,7 @@ public class StaticPages_Library extends BaseLibrary{
 	private FQA_Page faq;
 	private StoreLocator_Page stores;
 	private WebDriverWait wait;
-	String scenario = "Static_Pages";
+	String scenario = "static_pages";
 	public StaticPages_Library(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -70,7 +70,7 @@ public class StaticPages_Library extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void selectMyStore() {
+	public void selectMyStore() throws InterruptedException {
 		startTimer(scenario,"store_locator_select_mystore");
 		wait.until(ExpectedConditions.visibilityOf(home.linkSelectStore)).click();
 		waitForVisibilityOf(home.txtCity);
@@ -83,27 +83,27 @@ public class StaticPages_Library extends BaseLibrary{
 	}
 	
 	public void navigateFAQ() throws InterruptedException {
-		startTimer(scenario,"navigate_to_FAQ");
+		startTimer(scenario,"navigate_to_faq");
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
 		//waitForVisibilityOf(faq.txtSearchFQA);
 		waitForVisibilityOf(faq.linkViewAll);
 		stopTimer();
 		// end
-		startTimer(scenario,"navigate_to_credito_page");
+		startTimer(scenario,"navigate_to_credito");
 		navigate(faq.linkCreditoPage,"Crédito");
 		stopTimer();
 		//end
-		startTimer(scenario,"navigate_to_giftTable_page");
+		startTimer(scenario,"navigate_to_gift_table");
 		backToFAQ();
 		navigate(faq.linkMesaRegalosPage,"Mesa de regalos");
 		stopTimer();
 		//end
-		startTimer(scenario,"navigate_to_aboutUs_page");
+		startTimer(scenario,"navigate_to_about_us");
 		backToFAQ();
 		navigate(faq.linkAboutUsPage," Preguntas Frecuentes");
 		stopTimer();
 		//end
-		startTimer(scenario,"navigate_to_terms&conditions_page");
+		startTimer(scenario,"navigate_to_terms_conditions");
 		backToFAQ();
 		goTo(faq.linkProtectiondata,"Aviso de Privacidad Integral Clientes");
 		stopTimer();
@@ -111,17 +111,17 @@ public class StaticPages_Library extends BaseLibrary{
 	}
 	
 	public void navigateCredito() throws InterruptedException {
-		startTimer(scenario,"navigate_to_credit&guide_page");
+		startTimer(scenario,"navigate_to_credit_guide");
 		backToFAQ();
 		goTo(faq.linkGuiaCredito," Introducción Guía de consulta de Crédito Liverpool en Internet");
 		stopTimer();
 		//end
-		startTimer(scenario,"navigate_to_mycards_page");
+		startTimer(scenario,"navigate_to_my_cards");
 		backToFAQ();
 		goTo(faq.linkGuiaCredito,"Mis tarjetas Liverpool");
 		stopTimer();
 		//end
-		startTimer(scenario,"navigate_to_creditcharge_page");
+		startTimer(scenario,"navigate_to_credit_charge");
 		backToFAQ();
 		goTo(faq.linkGuiaCredito," Cobranza");
 		stopTimer();
@@ -133,7 +133,7 @@ public class StaticPages_Library extends BaseLibrary{
 		faq.imgBackHome.click();
 		homePage();
 		stopTimer();
-		startTimer(scenario,"navigate_to_insurance_center_page");
+		startTimer(scenario,"navigate_to_insurance_center");
 		wait.until(ExpectedConditions.visibilityOf(home.insuranceCenter)).click();
 		pageLoad();
 		waitForVisibilityOf(home.imgInsuranceCategory);

@@ -14,7 +14,7 @@ public class GiftRegistry_Library extends BaseLibrary{
 	private WebDriverWait wait;
 	private Home_Page home;
 	private GiftRegistry_Page gift;
-	String scenario = "Gift_Registry";
+	String scenario = "gift_registry";
 	public GiftRegistry_Library(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -28,9 +28,10 @@ public class GiftRegistry_Library extends BaseLibrary{
 		pageLoad();
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 		stopTimer();
+		startTimer(scenario,"navigate_gift_table_page1");
 		gotoGiftRegistrypage();
 		//end
-		startTimer(scenario,"search_gift_table_byName");
+		startTimer(scenario,"search_gift_table_by_name");
 		gift.btnGotoSearchGift.click();
 		waitForVisibilityOf(gift.txtFirstName);
 		gift.txtFirstName.sendKeys("Diana");
@@ -48,9 +49,11 @@ public class GiftRegistry_Library extends BaseLibrary{
 	}
 	
 	public void searchByID() throws InterruptedException {
+		startTimer(scenario,"navigate_gift_table_page2");
 		gotoGiftRegistrypage();
+		stopTimer();
 		// end
-		startTimer(scenario,"search_gift_table_byID_event");
+		startTimer(scenario,"search_gift_table_by_event_id");
 		gift.btnGotoSearchGift.click();
 		waitForVisibilityOf(gift.txtFirstName);
 		scroll(gift.txtEventNumber);
@@ -64,10 +67,8 @@ public class GiftRegistry_Library extends BaseLibrary{
 	
 	private void gotoGiftRegistrypage() throws InterruptedException {
 		wait.until(ExpectedConditions.visibilityOf(home.linkGiftTablePage)).click();
-		startTimer(scenario,"navigate_gift_table_page");
 		pageLoad();
 		waitForVisibilityOf(gift.btnGotoSearchGift);
-		stopTimer();
 	}
 	
 }

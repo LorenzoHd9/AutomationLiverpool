@@ -27,7 +27,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	private PDP_Page pdp;
 	private MyBag_Page mybag;
 	private Checkout_Page checkout;
-	String scenario = "Registered_User_Checkout";
+	String scenario = "registered_user_checkout";
 	public RegisteredCheckout_Libary(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -54,7 +54,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		waitForVisibilityOf(login.txtUserName);
 		waitForVisibilityOf(login.btnLogIn);
 		stopTimer();
-		startTimer(scenario,"fill_form_&_login");
+		startTimer(scenario,"fill_and_login");
 		login.txtUserName.sendKeys("test.ccheck.app011005@gmail.com");
 		login.txtPassword.sendKeys("12345678");
 		login.btnLogIn.click();
@@ -132,7 +132,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	
 	public void myBag() throws InterruptedException {
 		wait.until(ExpectedConditions.elementToBeClickable(home.linkMyBag)).click();
-		startTimer(scenario,"navigate_to_my_Bag");
+		startTimer(scenario,"navigate_to_my_bag");
 		isLoadImgEnabled();
 		pageLoad();
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
@@ -188,7 +188,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertChangeAddress));
 		stopTimer();
 		//end
-		startTimer(scenario,"pay_form");
+		startTimer(scenario,"pay_form1");
 		wait.until(ExpectedConditions.elementToBeClickable(checkout.linkChangeCard)).click();
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnPaymentContinue);
@@ -200,7 +200,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		stopTimer();
 		//end
 		try {
-			startTimer(scenario,"change_promotion");
+			startTimer(scenario,"change_promotion1");
 			scroll(checkout.btnPromotion);
 			waitForVisibilityOf(checkout.btnPromotion);
 			checkout.btnPromotion.click();
@@ -218,14 +218,14 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		isLoadImgEnabled();
 		System.out.println("click 5----- quantity");
 		*/
-		startTimer(scenario,"finalize_purchase");
+		startTimer(scenario,"finalize_purchase1");
 		scroll(mybag.txtProductQty.get(0));
 		checkout.submitOrder.click();
 		wait.until(ExpectedConditions.visibilityOf(checkout.snackBarError)).click();
 		stopTimer();
 	}
 	
-	public void oneCheckoutTwo() {
+	public void oneCheckoutTwo() throws InterruptedException {
 		startTimer(scenario,"home_delivery");
 		waitForVisibilityOf(checkout.txtchangeAddress);
 		checkout.txtchangeAddress.click();
@@ -238,7 +238,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		wait.until(ExpectedConditions.invisibilityOf(checkout.alertChangeAddress));
 		stopTimer();
 		// end
-		startTimer(scenario,"pay_form");
+		startTimer(scenario,"pay_form2");
 		wait.until(ExpectedConditions.visibilityOf(checkout.linkChangeCard)).click();
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnPaymentContinue);
@@ -275,7 +275,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	}
 	
 	public void logOut() throws InterruptedException {
-		startTimer(scenario,"back_to_homepage");
+		startTimer(scenario,"homepage");
 		scroll(checkout.imgLogoHome);
 		checkout.imgLogoHome.click();
 		homePage();
@@ -327,4 +327,21 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		///waitForVisibilityOf(plp.imgProduct_pdp); NECESITA CAMBIARSE POR LA LISTA.
 	}
 
+	public void cleanCart() throws InterruptedException {
+		wait.until(ExpectedConditions.elementToBeClickable(home.linkMyBag)).click();
+		isLoadImgEnabled();
+		pageLoad();
+		try {
+			wait.until(ExpectedConditions.elementToBeClickable(mybag.tabMyBag)).click();
+			wait.until(ExpectedConditions.elementToBeClickable(mybag.btnDelete)).click();
+			isLoadImgEnabled();
+			refreshedAndClickable(mybag.btnDelete);
+			mybag.btnDelete.click();
+			isLoadImgEnabled();
+			wait.until(ExpectedConditions.elementToBeClickable(mybag.tabItemSaved)).click();
+			refreshedAndClickable(mybag.btnDelete);
+			mybag.btnDelete.click();
+		}
+		catch(Exception ex) {System.out.println("looks like the shopping cart is Empty!");}
+		}
 }
