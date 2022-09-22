@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class Home_Page extends BasePage{
 	
 	 @FindBy(css ="div[class='slick-slide slick-active']")
-	 public WebElement carouselOnesection;
+	 public WebElement carouselOnesection; //modified to test error
 	 
 	 @FindBy(css = "div[id='carouselNo-2'] [class='slick-slide slick-active']")
 	 public WebElement carouselTwosection;

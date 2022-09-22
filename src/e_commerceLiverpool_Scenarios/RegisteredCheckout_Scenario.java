@@ -1,12 +1,12 @@
 package e_commerceLiverpool_Scenarios;
 
+import java.io.PrintWriter;
+
 import e_commerceLiverpool_Library.RegisteredCheckout_Libary;
 
 public class RegisteredCheckout_Scenario extends CreateDriver{
 
 	public static void registeredCheckout() throws InterruptedException {
-		int i = 0;
-		while(i < 2) {
 			try {
 				RegisteredCheckout_Libary checkout = new RegisteredCheckout_Libary(setUp());
 				checkout.LogIn();
@@ -18,10 +18,13 @@ public class RegisteredCheckout_Scenario extends CreateDriver{
 				checkout.oneCheckoutTwo();
 				checkout.logOut();
 				tearDown();
-				System.out.println("Registered checkout iteration complete: "+i);
+				System.out.println("Registered checkout iteration complete: ");
 			}
-			catch(Exception ex) {System.out.println("something when wrong, closing chrome...");tearDown();}
-			i++;
-		}
+			catch(Exception ex) {
+				PrintWriter pw = new PrintWriter(sw);
+				ex.printStackTrace(pw);
+				createLogFile("registeredCheckout",sw.toString());
+				tearDown();
+			}
 	}
 }

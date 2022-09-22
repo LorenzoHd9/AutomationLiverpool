@@ -1,12 +1,12 @@
 package e_commerceLiverpool_Scenarios;
 
+import java.io.PrintWriter;
+
 import e_commerceLiverpool_Library.StaticPages_Library;
 
 public class StaticPages_Scenario extends CreateDriver{
 
 	public static void statiPages() throws InterruptedException {
-		int i = 0;
-		while(i < 2) {
 			try {
 				StaticPages_Library staticP = new StaticPages_Library(setUp());
 				staticP.goToHelpPage();
@@ -16,10 +16,13 @@ public class StaticPages_Scenario extends CreateDriver{
 				staticP.navigateCredito();
 				staticP.navigateInsuranceCenter();
 				tearDown();
-				System.out.println("Static pages iteration complete: "+i);
+				System.out.println("Static pages iteration complete: ");
 			}
-			catch(Exception ex) {System.out.println("something when wrong, closing chrome...");tearDown();}
-			i++;
-		}
+			catch(Exception ex) {
+				PrintWriter pw = new PrintWriter(sw);
+				ex.printStackTrace(pw);
+				createLogFile("staticPages",sw.toString());
+				tearDown();
+			}
 	}
 }
