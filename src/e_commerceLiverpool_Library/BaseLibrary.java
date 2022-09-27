@@ -1,7 +1,6 @@
 package e_commerceLiverpool_Library;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -24,6 +23,7 @@ public class BaseLibrary {
 	String stepName = "";
 	String scenarioName = "";
 	Date start;
+	String startScenario;
 	public BaseLibrary(WebDriver driver) {
 		this.driver = driver;
 	}
@@ -112,16 +112,31 @@ public class BaseLibrary {
 		else {
 			key = keyformat.format(end)+""+minute;
 		}
-		ConnectDB.setScenarioTime(scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
+		ConnectDB.setStepTime(scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
 		try{Thread.sleep(3000);}catch(Exception ex) {}
 	}
 	
 	public static String configProperties(String Property) throws IOException {
-		String propertiesFile = "\\config.properties";
+		String propertiesFile = "config.properties";
 		FileInputStream propInput = new FileInputStream(propertiesFile);
 		
 		Properties prop = new Properties();
 		prop.load(propInput);
 		return prop.getProperty(Property);
 	}
+	
+	protected void getInitTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		startScenario = sdf.format(start);
+	}
+	
+	protected void finishedScenario(String errorMsg) {
+		if(errorMsg ==null) {
+			ConnectDB.setScenarioTime(scenarioName,"Web", stepName, startScenario, "", "true");
+		}
+		else {
+			ConnectDB.setScenarioTime(scenarioName,"Web", stepName, startScenario, "", errorMsg);
+		}
+	}
+	
 }

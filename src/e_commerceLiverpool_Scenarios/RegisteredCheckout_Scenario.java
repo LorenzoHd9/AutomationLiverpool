@@ -18,9 +18,10 @@ public class RegisteredCheckout_Scenario extends CreateDriver{
 				checkout.oneCheckoutTwo();
 				checkout.logOut();
 				tearDown();
-				System.out.println("Registered checkout iteration complete: ");
+				System.out.println("--Registered user checkout scenario completed:-");
 			}
 			catch(Exception ex) {
+				System.out.println("something went wrong, look at the log file for more details!!");
 				PrintWriter pw = new PrintWriter(sw);
 				ex.printStackTrace(pw);
 				createLogFile("registeredCheckout",sw.toString());

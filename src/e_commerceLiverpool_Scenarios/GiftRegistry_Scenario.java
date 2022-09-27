@@ -13,9 +13,11 @@ public class GiftRegistry_Scenario extends CreateDriver{
 				giftRegistry.searchByName();
 				giftRegistry.searchByID();
 				tearDown();
-				System.out.println("giftRegistry iteration complete: ");
+				System.out.println("-------giftRegistry scenario completed:-------");
+				System.out.println();
 			}
 			catch(Exception ex) {
+				System.out.println("something went wrong, look at the log file for more details!!");
 				PrintWriter pw = new PrintWriter(sw);
 				ex.printStackTrace(pw);
 				createLogFile("giftRegistry",sw.toString());

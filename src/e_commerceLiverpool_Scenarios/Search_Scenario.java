@@ -14,9 +14,10 @@ public class Search_Scenario extends CreateDriver{
 				search.searchID();
 				search.searchThreeCharacters();
 				tearDown();
-				System.out.println("Search iteration complete: ");
+				System.out.println("----------Search scenario completed:----------");
 			}
 			catch(Exception ex) {
+				System.out.println("something went wrong, look at the log file for more details!!");
 				PrintWriter pw = new PrintWriter(sw);
 				ex.printStackTrace(pw);
 				createLogFile("search",sw.toString());

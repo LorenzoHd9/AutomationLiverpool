@@ -18,10 +18,12 @@ public class Browse_Scenario extends CreateDriver{
 				browse.onCategoryL4PDP();
 				browse.navigateHomeLinks();
 				tearDown();
-				System.out.println("Browse iteration complete: ");
+				System.out.println("-----------Browse scenario completed:---------");
 			}
 			catch(Exception ex) {
+				System.out.println("something went wrong, look at the log file for more details!!");
 				PrintWriter pw = new PrintWriter(sw);
+			
 				ex.printStackTrace(pw);
 				createLogFile("browse",sw.toString());
 				tearDown();

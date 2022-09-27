@@ -4,25 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-//import com.mysql.jdbc.Connection;
-//import com.mysql.jdbc.PreparedStatement;
-
 public class ConnectDB {
 
 	public static Connection connect() {
 		Connection con = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://"+BaseLibrary.configProperties("dbHost_dbName"),BaseLibrary.configProperties("dbUser"),BaseLibrary.configProperties("dbPassword"));												//
+			con = DriverManager.getConnection(BaseLibrary.configProperties("dbHost_dbName"),BaseLibrary.configProperties("dbUser"),BaseLibrary.configProperties("dbPassword"));		
 		}
 		catch(Exception e) {
 			System.out.println("cannot connect: "+e);
 		}
-		if(con != null) {System.out.println("Connect Successfully");}
+		//if(con != null) {System.out.println("Connect Successfully");}
 		return con;
 	}
 	
-	public static void setScenarioTime(String scriptName, String platform, String step, String startDate , String endDate, double durationOf, String key) {
+	public static void setStepTime(String scriptName, String platform, String step, String startDate , String endDate, double durationOf, String key) {
 		Connection conn = null;
 		PreparedStatement statement = null;
 		try {
@@ -35,6 +32,22 @@ public class ConnectDB {
 		}
 		catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void setScenarioTime(String scriptName, String platform, String step, String startDate , String endDate, String pass) {
+		Connection connt = null;
+		PreparedStatement statement = null;
+		try {
+			connt = connect();
+			String query3 = "INSERT INTO step_time (script_name,platform,step,start_date,end_date,pass) VALUES ("+"'"+scriptName+"'"+","+"'"+platform+"'"+","+"'"+step+"'"+","+"'"+startDate+"'"+","+"'"+endDate+"'"+","+"'"+pass+"'"+")";
+			statement = connt.prepareStatement(query3);
+			statement.executeUpdate();
+			statement.close();
+			connt.close();
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 }

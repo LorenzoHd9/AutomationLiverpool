@@ -7,6 +7,9 @@ import java.io.StringWriter;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import e_commerceLiverpool_Library.BaseLibrary;
 
 public class CreateDriver {
 	
@@ -15,8 +18,16 @@ public class CreateDriver {
 	protected static WebDriver setUp() throws IOException {
 		Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe").destroy();
 		System.setProperty("webDriver.chrome.driver","chromedriver.exe");
-		//src/main/resources/driver/chromedriver2.exe
-		driver = new ChromeDriver();
+		//System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY,"true");
+		System.setProperty("webdriver.chrome.silentOutput", "true");
+		if(BaseLibrary.configProperties("headless") == "true") {
+			ChromeOptions opt = new ChromeOptions();
+			opt.addArguments("--headless");
+			driver = new ChromeDriver(opt);
+		}
+		else {
+			driver = new ChromeDriver();
+		}
 		driver.manage().window().maximize();
 		driver.get("https://www.liverpool.com.mx");
 		return driver;
@@ -39,7 +50,7 @@ public class CreateDriver {
 		try {
 			FileWriter myLog = new FileWriter(myFile);
 			myLog.write(log);
-			myLog.write("---------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			myLog.write("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			myLog.close();
 		}catch(Exception ex) {ex.printStackTrace();}
 	}

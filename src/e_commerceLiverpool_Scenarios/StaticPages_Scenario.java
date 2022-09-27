@@ -16,9 +16,10 @@ public class StaticPages_Scenario extends CreateDriver{
 				staticP.navigateCredito();
 				staticP.navigateInsuranceCenter();
 				tearDown();
-				System.out.println("Static pages iteration complete: ");
+				System.out.println("------Static pages scenario completed:--------");
 			}
 			catch(Exception ex) {
+				System.out.println("something went wrong, look at the log file for more details!!");
 				PrintWriter pw = new PrintWriter(sw);
 				ex.printStackTrace(pw);
 				createLogFile("staticPages",sw.toString());
