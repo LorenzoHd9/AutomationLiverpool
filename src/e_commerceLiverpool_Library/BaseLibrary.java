@@ -22,8 +22,8 @@ public class BaseLibrary {
 	private WebDriver driver;
 	String stepName = "";
 	String scenarioName = "";
-	Date start;
-	String startScenario;
+	static Date start;
+	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	public BaseLibrary(WebDriver driver) {
 		this.driver = driver;
 	}
@@ -98,7 +98,6 @@ public class BaseLibrary {
 	
 	protected void stopTimer() throws InterruptedException {
 		Date end = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		SimpleDateFormat keyformat = new SimpleDateFormat("yyyyMMddHH");
 		String initime = sdf.format(start);
 		String endtime = sdf.format(end);
@@ -112,7 +111,7 @@ public class BaseLibrary {
 		else {
 			key = keyformat.format(end)+""+minute;
 		}
-		ConnectDB.setStepTime(scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
+		ConnectDB.setStepTime(ConnectDB.getExecuteID(),scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
 		try{Thread.sleep(3000);}catch(Exception ex) {}
 	}
 	
@@ -125,17 +124,19 @@ public class BaseLibrary {
 		return prop.getProperty(Property);
 	}
 	
-	protected void getInitTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		startScenario = sdf.format(start);
+	public static void initScenario(String scenarioName) {
+		start = new Date();
+		String initime = sdf.format(start);
+		ConnectDB.setScenarioTime(scenarioName, "Web", initime);
 	}
 	
-	protected void finishedScenario(String errorMsg) {
-		if(errorMsg ==null) {
-			ConnectDB.setScenarioTime(scenarioName,"Web", stepName, startScenario, "", "true");
+	public static void endScenario(String error, String errorMsg) {
+		Date endScenario = new Date();
+		if(error == "0") {
+			ConnectDB.updateScenarioTime(sdf.format(endScenario),error,"");
 		}
-		else {
-			ConnectDB.setScenarioTime(scenarioName,"Web", stepName, startScenario, "", errorMsg);
+		else if (error =="1"){
+			ConnectDB.updateScenarioTime(sdf.format(endScenario),error, errorMsg);
 		}
 	}
 	

@@ -201,7 +201,6 @@ public class Browse_Library extends BaseLibrary{
 					Thread.sleep(500);
 					if(pdp.btnSize.isDisplayed() != false) {
 						wait.until(ExpectedConditions.elementToBeClickable(pdp.btnSize)).click();
-						System.out.println("clicked at size button");
 						refreshedAndClickable(pdp.viewerImgPDP);
 						stopTimer();
 						// end
@@ -210,7 +209,6 @@ public class Browse_Library extends BaseLibrary{
 					if(pdp.linkColor.isDisplayed() != false) {
 						startTimer(scenario,"select_color");
 						wait.until(ExpectedConditions.elementToBeClickable(pdp.linkColor)).click();
-						System.out.println("clicked at color button");
 						refreshedAndClickable(pdp.viewerImgPDP);
 						stopTimer();
 						//end

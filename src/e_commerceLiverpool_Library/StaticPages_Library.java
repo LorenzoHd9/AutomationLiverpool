@@ -146,7 +146,7 @@ public class StaticPages_Library extends BaseLibrary{
 		waitForVisibilityOf(faq.divMenuLeft);
 		waitForVisibilityOf(faq.divTitle);
 		//wait.until(ExpectedConditions.textToBePresentInElement(faq.divTitle, pageTitle));
-		System.out.println("Page: "+ pageTitle);
+		//System.out.println("Page: "+ pageTitle);
 	}
 	private void navigate(WebElement gotoLink,String pageTitle) {
 		scroll(gotoLink);
