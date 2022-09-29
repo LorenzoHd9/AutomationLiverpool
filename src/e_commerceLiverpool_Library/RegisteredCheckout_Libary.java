@@ -311,10 +311,8 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	private void navigateMyAccount(int index, WebElement waitForElement) throws InterruptedException {
 		waitForVisibilityOf(home.userNameSession);
 		hoverOn(home.userNameSession);
-		Thread.sleep(500);
 		waitForVisibilityOf(myaccount.divPoUPMySession);
 		waitForVisibilityOf(home.mySessionLinks.get(index));
-		System.out.println("click At: "+ home.mySessionLinks.get(index).getText());
 		home.mySessionLinks.get(index).click();
 		pageLoad();
 		waitForVisibilityOf(waitForElement);
@@ -345,8 +343,8 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		}
 		catch(Exception ex) {
 			System.out.println("looks like the shopping cart is Empty!");
-			home.imgLogo.click();
-			homePage();
+			//home.imgLogo.click();
+			//homePage();
 			}
 		}
 }

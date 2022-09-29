@@ -73,6 +73,5 @@
 	<classpathentry kind="lib" path="C:/Users/Lorenzo/eclipse-workspace/MonitoreoLiverpool/extDependt/selenium-support-4.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Lorenzo/eclipse-workspace/MonitoreoLiverpool/extDependt/slf4j-api-1.7.35.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Lorenzo/eclipse-workspace/MonitoreoLiverpool/extDependt/slf4j-simple-1.7.35.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lorenzo/eclipse-workspace/MonitoreoLiverpool/extDependt/commons-text-1.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

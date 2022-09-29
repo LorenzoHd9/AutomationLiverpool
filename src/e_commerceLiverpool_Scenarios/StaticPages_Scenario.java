@@ -1,9 +1,5 @@
 package e_commerceLiverpool_Scenarios;
 
-import java.io.PrintWriter;
-
-import org.apache.commons.text.StringEscapeUtils;
-
 import e_commerceLiverpool_Library.BaseLibrary;
 import e_commerceLiverpool_Library.StaticPages_Library;
 
@@ -24,12 +20,8 @@ public class StaticPages_Scenario extends CreateDriver{
 				BaseLibrary.endScenario("0", "");
 			}
 			catch(Exception ex) {
-				System.out.println("something went wrong, look at the log file for more details!!");
 				tearDown();
-				BaseLibrary.endScenario("1", StringEscapeUtils.escapeJava(ex.getMessage()));
-				PrintWriter pw = new PrintWriter(sw);
-				ex.printStackTrace(pw);
-				createLogFile("staticPages",sw.toString());
+				BaseLibrary.errorScenario("static_pages", ex);
 			}
 	}
 }

@@ -1,7 +1,11 @@
 package e_commerceLiverpool_Library;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
@@ -112,7 +116,7 @@ public class BaseLibrary {
 			key = keyformat.format(end)+""+minute;
 		}
 		ConnectDB.setStepTime(ConnectDB.getExecuteID(),scenarioName,"Web",stepName,initime, endtime, durationOfSeconds, key);
-		try{Thread.sleep(3000);}catch(Exception ex) {}
+		Thread.sleep(3000);
 	}
 	
 	public static String configProperties(String Property) throws IOException {
@@ -136,8 +140,47 @@ public class BaseLibrary {
 			ConnectDB.updateScenarioTime(sdf.format(endScenario),error,"");
 		}
 		else if (error =="1"){
-			ConnectDB.updateScenarioTime(sdf.format(endScenario),error, errorMsg);
+			ConnectDB.updateScenarioTime(sdf.format(endScenario),error, escapeStr(errorMsg));
+		}
+	}
+	private static String escapeStr(String string) {
+		return string.replace("\\", "\\\\")
+		          .replace("\t", "\\t")
+		          .replace("\b", "\\b")
+		          .replace("\n", "\\n")
+		          .replace("\r", "\\r")
+		          .replace("\f", "\\f")
+		          .replace("\'", "\\'")
+		          .replace("\"", "\\\"");    
+	}
+	
+	private static void createLogFile(String scenario, String log) {
+		File myFile = null;
+		try {
+			myFile = new File("logsMonitoreo\\" + scenario + ".txt");
+			myFile.createNewFile();
+			FileWriter myLog = new FileWriter(myFile, true);
+			Date now = new Date();
+			myLog.write(sdf.format(now));
+			myLog.write("----");
+			myLog.write(log);
+			myLog.write("-----------------------------------------------");
+			myLog.write("-----------------------------------------------");
+			myLog.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
+	public static void errorScenario(String errorScenario, Throwable except) {
+		System.out.println("-----------------------------------------------");
+		System.out.println("-----------------------------------------------");
+		System.out.println("something went wrong, look at the log file for more details!!");
+		endScenario("1",except.getMessage());
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		except.printStackTrace(pw);
+		createLogFile(errorScenario,sw.toString());
+	}
 }
