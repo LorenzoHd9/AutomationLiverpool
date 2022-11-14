@@ -1,5 +1,6 @@
 package e_commerceLiverpool_Library;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.Keys;
@@ -19,17 +20,17 @@ public class StaticPages_Library extends BaseLibrary{
 	private FQA_Page faq;
 	private StoreLocator_Page stores;
 	private WebDriverWait wait;
-	String scenario = "static_pages";
+	String scenario = "static_pages_web";
 	public StaticPages_Library(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 		home = new Home_Page(driver);
 		faq = new FQA_Page(driver);
 		stores  = new StoreLocator_Page(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 	}
 	
-	public void goToHelpPage() throws InterruptedException {
+	public void goToHelpPage() throws InterruptedException, IOException {
 		homePage();
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
 		startTimer(scenario,"navigate_to_help_page");
@@ -39,7 +40,7 @@ public class StaticPages_Library extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void goToStoreLocatorPage() throws InterruptedException {
+	public void goToStoreLocatorPage() throws InterruptedException, IOException {
 		startTimer(scenario,"back_to_homepage");
 		wait.until(ExpectedConditions.visibilityOf(faq.imgBackHome)).click();
 		homePage();
@@ -70,19 +71,21 @@ public class StaticPages_Library extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void selectMyStore() throws InterruptedException {
+	public void selectMyStore() throws InterruptedException, IOException {
 		startTimer(scenario,"store_locator_select_mystore");
-		wait.until(ExpectedConditions.visibilityOf(home.linkSelectStore)).click();
+		refreshedAndClickable(home.linkSelectStore);
+		home.linkSelectStore.click();
 		waitForVisibilityOf(home.txtCity);
-		home.txtCity.sendKeys("Monterrey"+ Keys.ENTER);
+		home.txtCity.sendKeys("Nuevo leon"+ Keys.ENTER);
 		waitForVisibilityOf(home.storesContainer);
+		//wait.until(ExpectedConditions.elementToBeSelected(home.rdoStore));
 		home.rdoStore.click();
 		wait.until(ExpectedConditions.visibilityOf(home.spanMyStore));
 		stopTimer();
 		//end
 	}
 	
-	public void navigateFAQ() throws InterruptedException {
+	public void navigateFAQ() throws InterruptedException, IOException {
 		startTimer(scenario,"navigate_to_faq");
 		wait.until(ExpectedConditions.visibilityOf(home.linkHelp)).click();
 		//waitForVisibilityOf(faq.txtSearchFQA);
@@ -110,7 +113,7 @@ public class StaticPages_Library extends BaseLibrary{
 		//end
 	}
 	
-	public void navigateCredito() throws InterruptedException {
+	public void navigateCredito() throws InterruptedException, IOException {
 		startTimer(scenario,"navigate_to_credit_guide");
 		backToFAQ();
 		goTo(faq.linkGuiaCredito," Introducción Guía de consulta de Crédito Liverpool en Internet");
@@ -128,7 +131,7 @@ public class StaticPages_Library extends BaseLibrary{
 		//end
 	}
 	
-	public void navigateInsuranceCenter() throws InterruptedException {
+	public void navigateInsuranceCenter() throws InterruptedException, IOException {
 		startTimer(scenario,"back_to_homepage");
 		faq.imgBackHome.click();
 		homePage();

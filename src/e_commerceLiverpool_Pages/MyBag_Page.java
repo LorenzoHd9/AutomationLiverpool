@@ -33,7 +33,8 @@ public class MyBag_Page extends BasePage{
 	@FindBy(id = "mdc-tab-2")
 	public WebElement tabItemSaved;
 	
-	@FindBy(css = "div[name='columnProduct']")
+	//@FindBy(css = "div[name='columnProduct']")
+	@FindBy(css = "p.description-attribute")
 	public WebElement divColumnProduct;
 	
 	public MyBag_Page(WebDriver driver) {

@@ -1,5 +1,6 @@
 package e_commerceLiverpool_Library;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.Keys;
@@ -28,7 +29,8 @@ public class Browse_Library extends BaseLibrary{
 	private GiftRegistry_Page gift;
 	private StoreLocator_Page stores;
 	private FQA_Page faq;
-	private String scenario = "browse";
+	private String scenario = "browse_web";
+	int add;
 	public Browse_Library(WebDriver driver){
 		super(driver);
 		home = new Home_Page(driver);
@@ -39,7 +41,7 @@ public class Browse_Library extends BaseLibrary{
 		gift = new GiftRegistry_Page(driver);
 		stores = new StoreLocator_Page(driver);
 		faq = new FQA_Page(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 	}
 	
 	public void homePage() throws InterruptedException {
@@ -48,7 +50,7 @@ public class Browse_Library extends BaseLibrary{
 		// end
 	}
 	
-	public void carouselOneSection() throws InterruptedException {
+	public void carouselOneSection() throws InterruptedException, IOException {
 		startTimer(scenario,"homepage1");
 		homePage();
 		stopTimer();
@@ -63,15 +65,20 @@ public class Browse_Library extends BaseLibrary{
 	
 	public void carouselTwoSection() throws InterruptedException {
 		startTimer(scenario,"carousel_two_section");
-		navigateCarousel(home.carouselTwosection);
-		stopTimer();
+		try {
+			navigateCarousel(home.carouselTwosection);
+			stopTimer();
+		}
+		catch(Exception ex) {
+			System.out.println("carousel doesn't exis");
+		}
 	}
 
-	public void OnCategories() throws InterruptedException {
+	public void OnCategories() throws InterruptedException, IOException {
+		Thread.sleep(1500);
 		startTimer(scenario,"category_l1");
 		hoverOn(home.linkCategories);
-		Thread.sleep(500);
-		hoverOn(home.linkCategories);
+		//hoverOn(home.linkCategories);
 		wait.until(ExpectedConditions.visibilityOf(home.categoryL1)).click();
 		pageLoad();
 		waitForVisibilityOf(plp.imgL2);
@@ -91,7 +98,7 @@ public class Browse_Library extends BaseLibrary{
 		// end l3
 	}
 
-	public void navigateL3Filters() throws InterruptedException {
+	public void navigateL3Filters() throws InterruptedException, IOException {
 		startTimer(scenario,"listing_view");
 		plp.iconListView.click();
 		waitForVisibilityOf(plp.divListingView);
@@ -142,11 +149,11 @@ public class Browse_Library extends BaseLibrary{
 		//end
 		startTimer(scenario,"remove_filter6");
 		cleanFilter();
-		refreshedAllAndClickable(plp.imgProduct_pdp);
+		//refreshedAllAndClickable(plp.imgProduct_pdp);
 		stopTimer();
 	}
 	
-	public void navigateL3SortBy() throws InterruptedException {
+	public void navigateL3SortBy() throws InterruptedException, IOException {
 		startTimer(scenario,"sort_relevance");
 		sortBy(0, "Relevancia");
 		stopTimer();
@@ -174,8 +181,8 @@ public class Browse_Library extends BaseLibrary{
 	}
 	
 	public void onCategoryL4PDP() throws InterruptedException {
-		//try{
-		startTimer(scenario,"category_l4");
+		try{
+			startTimer(scenario,"category_l4");
 			if(plp.linkL2_L4.isDisplayed() != false) {
 				plp.linkL2_L4.click();
 				wait.until(ExpectedConditions.visibilityOf(plp.iconL2));
@@ -199,8 +206,8 @@ public class Browse_Library extends BaseLibrary{
 					startTimer(scenario,"select_size");
 					scrollDown();
 					Thread.sleep(500);
-					if(pdp.btnSize.isDisplayed() != false) {
-						wait.until(ExpectedConditions.elementToBeClickable(pdp.btnSize)).click();
+					if(pdp.btnSizeEnable.isDisplayed() != false) {
+						wait.until(ExpectedConditions.elementToBeClickable(pdp.btnSizeEnable)).click();
 						refreshedAndClickable(pdp.viewerImgPDP);
 						stopTimer();
 						// end
@@ -237,6 +244,9 @@ public class Browse_Library extends BaseLibrary{
 				wait.until(ExpectedConditions.visibilityOf(pdp.btnAddToCart)).click();
 				scroll(home.txtSearchBar);
 				waitForVisibilityOf(pdp.alertContainer);
+				if(pdp.alertContainer.isDisplayed() != false) {
+					add = 1;
+				}
 				wait.until(ExpectedConditions.invisibilityOf(pdp.alertContainer));
 				stopTimer();
 				// end
@@ -261,8 +271,8 @@ public class Browse_Library extends BaseLibrary{
 					Thread.sleep(500);
 					scrollDown();
 					wait.until(ExpectedConditions.visibilityOf(pdp.btnSize));
-					if(pdp.btnSize.isDisplayed() != false) {
-						pdp.btnSize.click();
+					if(pdp.btnSizeEnable.isDisplayed() != false) {
+						pdp.btnSizeEnable.click();
 						refreshedAndClickable(pdp.viewerImgPDP);
 					}
 					startTimer(scenario,"buy_now");
@@ -276,17 +286,22 @@ public class Browse_Library extends BaseLibrary{
 					startTimer(scenario,"homepage3");
 					homePage();
 					stopTimer();
-				}catch(Exception ex) {}
+				}
+				catch(Exception ex) {
+					scrollToTop();
+				}
 			}
-		//} catch(Exception ex) {}
+		} 
+		catch(Exception ex) {
+		}
 	}
 	
-	public void navigateHomeLinks() throws InterruptedException {
+	public void navigateHomeLinks() throws Exception {
 		startTimer(scenario,"navigate_my_orders");
-		//scroll(home.txtSearchBar);
-		scrollUp();
-		waitForVisibilityOf(home.linkMyBag);
-		wait.until(ExpectedConditions.visibilityOf(home.linkMyShoppings)).click();
+		scroll(home.linkMyShoppings);
+		//scrollUp();//waitForVisibilityOf(home.linkMyBag);
+		wait.until(ExpectedConditions.visibilityOf(home.linkMyShoppings));
+		secureClick(home.linkMyShoppings);
 		pageLoad();
 		waitForVisibilityOf(login.txtUserName);
 		stopTimer();
@@ -326,11 +341,14 @@ public class Browse_Library extends BaseLibrary{
 		startTimer(scenario,"navigate_my_bag");
 		home.linkMyBag.click();
 		pageLoad();
-		try {
+		if(add == 1) {
 			wait.until(ExpectedConditions.visibilityOf(mybag.btnBuyNowProduct));
 			refreshedAndClickable(mybag.btnBuyNowProduct);
 			waitForVisibilityOf(mybag.divColumnProduct);
-		}catch(Exception ex) {}
+		}
+		else {
+			waitForVisibilityOf(mybag.btnLoginToBuy);
+		}
 		stopTimer();
 		// end
 		startTimer(scenario,"navigate_help");
@@ -351,7 +369,8 @@ public class Browse_Library extends BaseLibrary{
 	private void cleanFilter() throws InterruptedException {
 		scroll(plp.linkCleanfilters);
 		wait.until(ExpectedConditions.visibilityOf(plp.linkCleanfilters)).click();
-		Thread.sleep(1500);
+		//Thread.sleep(1500);
+		refreshedAllAndClickable(plp.imgProduct_pdp);
 	}
 	
 	private void navigateCarousel(WebElement carouselSection) throws InterruptedException {

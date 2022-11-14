@@ -1,5 +1,6 @@
 package e_commerceLiverpool_Library;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.Keys;
@@ -27,11 +28,11 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 	private PDP_Page pdp;
 	private MyBag_Page mybag;
 	private Checkout_Page checkout;
-	String scenario = "registered_user_checkout";
+	String scenario = "registered_user_checkout_web";
 	public RegisteredCheckout_Libary(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(45));
 		home = new Home_Page(driver);
 		login = new Login_Page(driver);
 		pdp = new PDP_Page(driver);
@@ -46,7 +47,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 	}
 	
-	public void LogIn() throws InterruptedException {
+	public void LogIn() throws InterruptedException, IOException {
 		homePage();
 		startTimer(scenario,"navigate_login_Page");
 		home.linkLogIn.click();
@@ -62,35 +63,58 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void navigateUserSessionOpt() throws InterruptedException{
+	public void cleanCart() throws Exception {
+		wait.until(ExpectedConditions.visibilityOf(home.linkMyBag)).click();
+		startTimer(scenario,"clean_cart");
+		isLoadImgEnabled();
+		pageLoad();
+		try {
+			/*wait.until(ExpectedConditions.elementToBeClickable(mybag.tabMyBag)).click();
+			wait.until(ExpectedConditions.elementToBeClickable(mybag.btnDelete)).click();
+			isLoadImgEnabled();refreshedAndClickable(mybag.btnDelete);mybag.btnDelete.click();
+			isLoadImgEnabled(); */
+			wait.until(ExpectedConditions.elementToBeClickable(mybag.tabItemSaved)).click();
+			//refreshedAndClickable(mybag.btnDelete);//mybag.btnDelete.click();
+			wait.until(ExpectedConditions.elementToBeClickable(mybag.btnDelete)).click();
+			secureClick(home.imgLogo);//home.imgLogo.click();
+			stopTimer();
+			homePage();
+		}
+		catch(Exception ex) {
+			secureClick(home.imgLogo);//home.imgLogo.click();
+			homePage();
+			}
+		}
+	
+	public void navigateUserSessionOpt() throws Exception{
+		startTimer(scenario,"naviagte_my_cards");
+		navigateMyAccount(4,myaccount.btnAddCard); // (*)
+		//waitForVisibilityOf(myaccount.btnAddCard);
+		stopTimer();
+		// end
 		startTimer(scenario,"naviagte_my_account");
-		navigateMyAccount(0,myaccount.listAside);
-		waitForVisibilityOf(myaccount.divPersonalData);
+		navigateMyAccount(0,myaccount.divPersonalData);
+		//waitForVisibilityOf(myaccount.divPersonalData);
 		stopTimer();
 		// end
 		startTimer(scenario,"naviagte_my_shoppings");
-		navigateMyAccount(1,myaccount.listAside);
-		waitForVisibilityOf(myaccount.orderFilter);
+		navigateMyAccount(1,myaccount.orderFilter);
+		//waitForVisibilityOf(myaccount.orderFilter);
 		stopTimer();
 		// end
 		startTimer(scenario,"naviagte_my_coupons");
-		navigateMyAccount(2,myaccount.listAside);
-		waitForVisibilityOf(myaccount.myCouponsTemplate);
-		stopTimer();
-		// end
-		startTimer(scenario,"naviagte_my_cards");
-		navigateMyAccount(4,myaccount.defaultCart); // (*)
-		waitForVisibilityOf(myaccount.btnAddCard);
+		navigateMyAccount(2,myaccount.myCouponsTemplate);
+		//waitForVisibilityOf(myaccount.myCouponsTemplate);
 		stopTimer();
 		// end
 		startTimer(scenario,"naviagte_airtime_recharge");
-		navigateMyAccount(3,myaccount.btnAddNumber);
-		waitForVisibilityOf(myaccount.btnSubmitRecharge);
+		navigateMyAccount(3,myaccount.btnSubmitRecharge);
+		//waitForVisibilityOf(myaccount.btnSubmitRecharge);
 		stopTimer();
 		// end
 	}
 	
-	public void addItems() throws InterruptedException{
+	public void addItems() throws InterruptedException, IOException{
 		startTimer(scenario,"search_item1");
 		search("sofa");
 		stopTimer();
@@ -130,7 +154,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void myBag() throws InterruptedException {
+	public void myBag() throws Exception {
 		wait.until(ExpectedConditions.elementToBeClickable(home.linkMyBag)).click();
 		startTimer(scenario,"navigate_to_my_bag");
 		isLoadImgEnabled();
@@ -153,32 +177,43 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		waitForVisibilityOf(mybag.btnBuyNowProduct);
 		stopTimer();
 		// end
+		try {
+			System.out.println("error displayed: "+ pdp.alertCloseError.isDisplayed());
+			if(pdp.alertCloseError.isDisplayed() == true) {
+				pdp.alertCloseError.click();
+				Thread.sleep(3000);
+			}
+		}
+		catch(Exception ex) {}
 		startTimer(scenario,"save_to_buy_later");
 		waitForVisibilityOf(mybag.btnSaveProduct.get(2));
-		scroll(mybag.btnSaveProduct.get(2));
-	    mybag.btnSaveProduct.get(2).click();
+		scroll(mybag.btnSaveProduct.get(2));//mybag.divColumnProduct.click();
+		secureClick(mybag.divColumnProduct);
+		secureClick(mybag.btnSaveProduct.get(2));
+	    //mybag.btnSaveProduct.get(2).click();
 	    isLoadImgEnabled();
 	    waitForVisibilityOf(mybag.btnBuyNowProduct);
 		scroll(home.txtSearchBar);
 		stopTimer();
 	} 
 	
-	public void oneCheckOut() throws InterruptedException {
+	public void oneCheckOut() throws Exception {
 		startTimer(scenario,"buy_now_item1");
 		wait.until(ExpectedConditions.visibilityOf(mybag.btnBuyNowProduct)).click();
 		isLoadImgEnabled();
-		pageLoad();
 		waitForVisibilityOf(checkout.txtchangeAddress);
 		stopTimer();
 		// end
 		startTimer(scenario,"click_collect");
-		checkout.txtchangeAddress.click();
+		//checkout.txtchangeAddress.click();
+		secureClick(checkout.txtchangeAddress);
 		isLoadImgEnabled();
 		waitForVisibilityOf(checkout.btnContinue);
 		checkout.btnclickCollect.click();
 		waitForVisibilityOf(checkout.cmbState);
 		Select state = new Select(checkout.cmbState);
-		checkout.cmbState.click();
+		secureClick(checkout.cmbState);
+		//checkout.cmbState.click();
 		state.selectByVisibleText("NUEVO LEÓN");
 		isLoadImgEnabled();
 		try { waitForVisibilityOf(checkout.containerPickUPStore);
@@ -225,7 +260,7 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void oneCheckoutTwo() throws InterruptedException {
+	public void oneCheckoutTwo() throws InterruptedException, IOException {
 		startTimer(scenario,"home_delivery");
 		waitForVisibilityOf(checkout.txtchangeAddress);
 		checkout.txtchangeAddress.click();
@@ -274,11 +309,11 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		stopTimer();
 	}
 	
-	public void logOut() throws InterruptedException {
+	public void logOut() throws Exception {
 		startTimer(scenario,"homepage");
 		scroll(checkout.imgLogoHome);
 		checkout.imgLogoHome.click();
-		homePage();
+		refreshedAndClickable(home.carouselOnesection);
 		stopTimer();
 		startTimer(scenario,"logout");
 		navigateMyAccount(5,home.carouselOnesection);
@@ -308,14 +343,20 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		wait.until(ExpectedConditions.invisibilityOf(pdp.alertContainer));
 	}
 	
-	private void navigateMyAccount(int index, WebElement waitForElement) throws InterruptedException {
+	private void navigateMyAccount(int index, WebElement waitForElement) throws Exception {
 		waitForVisibilityOf(home.userNameSession);
 		hoverOn(home.userNameSession);
-		waitForVisibilityOf(myaccount.divPoUPMySession);
-		waitForVisibilityOf(home.mySessionLinks.get(index));
-		home.mySessionLinks.get(index).click();
+		wait.until(ExpectedConditions.elementToBeClickable(myaccount.divPoUPMySession));
+		//waitForVisibilityOf(myaccount.divPoUPMySession);
+		wait.until(ExpectedConditions.elementToBeClickable(home.mySessionLinks.get(index)));
+		//waitForVisibilityOf(home.mySessionLinks.get(index));//home.mySessionLinks.get(index).click();
+		secureClick(home.mySessionLinks.get(index));
 		pageLoad();
-		waitForVisibilityOf(waitForElement);
+		try {
+			waitForVisibilityOf(waitForElement);
+		}
+		catch(Exception ex) {
+		}
 	}
 	
 	private void search(String searchTerm) {
@@ -326,25 +367,4 @@ public class RegisteredCheckout_Libary extends BaseLibrary{
 		///waitForVisibilityOf(plp.imgProduct_pdp); NECESITA CAMBIARSE POR LA LISTA.
 	}
 
-	public void cleanCart() throws InterruptedException {
-		wait.until(ExpectedConditions.elementToBeClickable(home.linkMyBag)).click();
-		isLoadImgEnabled();
-		pageLoad();
-		try {
-			wait.until(ExpectedConditions.elementToBeClickable(mybag.tabMyBag)).click();
-			wait.until(ExpectedConditions.elementToBeClickable(mybag.btnDelete)).click();
-			isLoadImgEnabled();
-			refreshedAndClickable(mybag.btnDelete);
-			mybag.btnDelete.click();
-			isLoadImgEnabled();
-			wait.until(ExpectedConditions.elementToBeClickable(mybag.tabItemSaved)).click();
-			refreshedAndClickable(mybag.btnDelete);
-			mybag.btnDelete.click();
-		}
-		catch(Exception ex) {
-			System.out.println("looks like the shopping cart is Empty!");
-			//home.imgLogo.click();
-			//homePage();
-			}
-		}
 }

@@ -52,6 +52,12 @@ public class PLP_Page extends BasePage{
 	@FindBy(css = "div.o-card__image__container")
 	public List<WebElement> imgProduct_pdp;
 	
+	@FindBy(css = "div.o-clp-cards-row_container")
+	public List<WebElement> cardsCLP;
+	
+	@FindBy(css = "div.m-product__listingPlp")
+	public WebElement ulListinPLP;
+	
 	@FindBy(css = "div.fiterl-prices input")
 	public WebElement chbxPrice;
 	

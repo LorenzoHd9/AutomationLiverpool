@@ -48,6 +48,9 @@ public class PDP_Page extends BasePage{
 	@FindBy(css = "ul#size-list-container button")
 	public WebElement btnSize;
 	
+	@FindBy(css = "button[class='a-btn a-btn--actionpdp']")
+	public WebElement btnSizeEnable;
+	
 	@FindBy(css = "a.m-product__anchorShareSocial")
 	public WebElement linkShareTo;
 	
@@ -74,10 +77,11 @@ public class PDP_Page extends BasePage{
 	
 	@FindBy(css ="div[class='m-alert__container mdc-snackbar    -success mdc-snackbar--open']")
 	public WebElement alertContainer;//m-alert__container mdc-snackbar -toTop   -success mdc-snackbar--open
-	//m-alert__container mdc-snackbar    -success mdc-snackbar--open
-	//undefinedm-mdc__snackbarSurface mdc-snackbar__surface
-	//undefinedm-mdc__snackbarSurface mdc-snackbar__surface
 	//after change quantity
+	
+	@FindBy(css = "div[class='m-alert__container mdc-snackbar  -alert mdc-snackbar--open'] [class='icon-close mdc-snackbar__dismiss']")
+	public WebElement alertCloseError;
+	
 	@FindBy(css = "img.mainLoader")
 	public WebElement imgLoading;
 	
@@ -95,6 +99,9 @@ public class PDP_Page extends BasePage{
 	
 	@FindBy(css = "div[class ='slick-slide slick-active slick-current']")
 	public WebElement carousel;
+	
+	@FindBy(css = "div[name='columnProduct']")
+	public WebElement columnProduct;
 	
 	public PDP_Page(WebDriver driver) {
 		super(driver);

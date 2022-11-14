@@ -7,7 +7,7 @@ public abstract class BaseTest {
 	//@BeforeMethod(alwaysRun = true)
 	//@Parameters({"browser","seleniumGridUrl"})
 	public void settingUp() throws IOException {
-		System.err.println("setUp Thread-ID: "+ Thread.currentThread().getId());
+		System.out.println("setUp Thread-ID: "+ Thread.currentThread().getId());
 		
 		CurrentWebDriver.getInstance().setWebDriver(ChromeDriverCreator.createWebDriver());
 		CurrentWebDriver.getInstance().getWebDriver().get("https://www.liverpool.com.mx");

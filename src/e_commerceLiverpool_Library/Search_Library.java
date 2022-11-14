@@ -1,5 +1,6 @@
 package e_commerceLiverpool_Library;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.Keys;
@@ -17,14 +18,15 @@ public class Search_Library extends BaseLibrary{
 	private Home_Page home;
 	private PLP_Page plp;
 	private PDP_Page pdp;
-	String scenario = "search";
+	String scenario = "search_web";
+	boolean divPLP = false;
 	public Search_Library(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
 		home = new Home_Page(driver);
 		plp = new PLP_Page(driver);
 		pdp = new PDP_Page(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(40));
 	}
 
 	public void homePage() throws InterruptedException {
@@ -32,7 +34,7 @@ public class Search_Library extends BaseLibrary{
 		wait.until(ExpectedConditions.visibilityOf(home.carouselOnesection));
 	}
 	
-	public void searchKeyword() throws InterruptedException {
+	public void searchKeyword() throws InterruptedException, IOException {
 		startTimer(scenario, "homepage1");
 		homePage();
 		stopTimer();
@@ -67,13 +69,13 @@ public class Search_Library extends BaseLibrary{
 		
 	}
 	
-	public void searchID() throws InterruptedException {
+	public void searchID() throws InterruptedException, IOException {
 		startTimer(scenario,"search_product_id");
-		search("1092197938", 00);
+		search("1092197938",9);
 		stopTimer();
 	}
 	
-	public void searchThreeCharacters() throws InterruptedException {
+	public void searchThreeCharacters() throws InterruptedException, IOException {
 		startTimer(scenario, "homepage2");
 		home.imgLogo.click();
 		homePage();
@@ -108,17 +110,26 @@ public class Search_Library extends BaseLibrary{
 		wait.until(ExpectedConditions.visibilityOf(home.txtSearchBar)).click();
 		home.txtSearchBar.clear();
 		home.txtSearchBar.sendKeys(keyword);
-		if(index != 00) {
+		if(index != 9){
 			refreshedAllAndClickable(home.typeAheadResults);
 			home.typeAheadResults.get(index).click();
-			//pageLoad();
-			refreshedAllAndClickable(plp.imgProduct_pdp);
-		}
-		else {
+			if(keyword == "sal" && index == 6) {
+				try {
+					refreshedAllAndClickable(plp.cardsCLP);
+				}
+				catch(Exception ex) {	
+				}
+			}
+			else {
+				try {
+					refreshedAllAndClickable(plp.imgProduct_pdp);
+				}
+				catch(Exception ex) {
+				}
+			}
+		} else {
 			home.txtSearchBar.sendKeys(Keys.ENTER);
-			try {
-				waitForVisibilityOf(pdp.pProductInfoCode);
-			}catch(Exception ex){}
+			waitForVisibilityOf(pdp.pProductInfoCode);
 		}
 	}
 }

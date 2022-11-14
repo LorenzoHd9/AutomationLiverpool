@@ -21,12 +21,14 @@ public class ConnectDB {
 		return con;
 	}
 	
-	public static void setStepTime(int executionID,String scriptName, String platform, String step, String startDate , String endDate, double durationOf, String key) {
+	public static void setStepTime(int executionID,String scriptName, String platform, String step, String startDate , String endDate, double durationOf, String key, double serverCPU, double freeMemory) {
 		Connection conn = null;
 		PreparedStatement statement = null;
 		try {
 			conn = connect();
-			String query2= "INSERT INTO step_time (execution_id,script_name,platform,step,start_date,end_date,duration_seconds,key_row) VALUES ("+"'"+executionID+"'"+","+"'"+scriptName+"'"+","+"'"+platform+"'"+","+"'"+step+"'"+","+"'"+startDate+"'"+","+"'"+endDate+"'"+","+""+durationOf+""+","+"'"+key+"'"+")";
+			String query2= "INSERT INTO step_time "
+					+ "(execution_id,script_name,platform,step,start_date,end_date,duration_seconds,key_row,server_cpu,server_memory) "
+					+ "VALUES ("+"'"+executionID+"'"+","+"'"+scriptName+"'"+","+"'"+platform+"'"+","+"'"+step+"'"+","+"'"+startDate+"'"+","+"'"+endDate+"'"+","+""+durationOf+""+","+"'"+key+"'"+","+""+serverCPU+""+","+""+freeMemory+""+")";
 			statement = conn.prepareStatement(query2);
 	        statement.executeUpdate();
 			statement.close();
@@ -37,6 +39,7 @@ public class ConnectDB {
 		}
 	}
 	
+	@SuppressWarnings("static-access")
 	public static void setScenarioTime(String scenarioName, String platform, String startDate ) {
 		Connection connt = null;
 		PreparedStatement statement = null;
@@ -58,12 +61,12 @@ public class ConnectDB {
 		
 		}
 	
-	public static void updateScenarioTime(String endDate, String error, String errorMsg) {
+	public static void updateScenarioTime(String endDate, String error, String errorMsg, String errorStep) {
 		Connection conn = null;
 		PreparedStatement statement = null;
 		try {
 			conn = connect();
-			String updateScenario = "UPDATE script_time SET end_date ="+"'"+endDate+"'"+", with_error = "+"'"+error+"'"+", error_message = "+"'"+errorMsg+"'"+" WHERE id = "+""+executionId+""+"";
+			String updateScenario = "UPDATE script_time SET end_date ="+"'"+endDate+"'"+", with_error = "+"'"+error+"'"+", error_message = "+"'"+errorMsg+"'"+", error_step = "+"'"+errorStep+"'"+" WHERE id = "+""+executionId+""+"";
 			statement = conn.prepareStatement(updateScenario);
 			statement.execute();
 			statement.close();
